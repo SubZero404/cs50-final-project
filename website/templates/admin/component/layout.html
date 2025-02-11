@@ -4,11 +4,23 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dashboard | {% block title %}{% endblock %}</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <link rel="stylesheet" href="{{ url_for('serve_node_modules', filename='bootstrap/dist/css/bootstrap.min.css') }}">
+    <link rel="stylesheet" href="{{ url_for('serve_node_modules', filename='bootstrap-icons/font/bootstrap-icons.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
 </head>
-<body>
-    {% include "navbar.html" %}
+<body data-bs-theme="dark">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-2 p-0">
+                {% include "admin/component/sidebar.html" %}
+            </div>
+            <div class="col-10 p-0">
+                {% include "admin/component/navbar.html" %}
+            </div>
+        </div>
+    </div>
     {% block body %}{% endblock %}
-    <script src="{{ url_for('static', filename='script.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+    <script src="{{ url_for('serve_node_modules', filename='bootstrap/dist/js/bootstrap.bundle.min.js') }}"></script>
 </body>
 </html>
