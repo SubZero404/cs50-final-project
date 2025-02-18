@@ -1,53 +1,47 @@
-/* Customize sidebar scrollbar */
-.side-bar .nav-div {
-    overflow-y: auto; /* Allow vertical scrolling */
-    scrollbar-width: thin; /* For Firefox */
-    scrollbar-color: #888 transparent; /* For Firefox */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
 }
 
-/* For Webkit browsers (Chrome, Safari, Edge) */
-.side-bar .nav-div::-webkit-scrollbar {
-    width: 6px; /* Slightly wider for better visibility */
+.loginAndRegister-div .img-lg-div {
+  width: 90%;
+  height: 400px;
+  border-radius: 0 50px 50px 0;
 }
-
-.side-bar .nav-div::-webkit-scrollbar-track {
-    background: transparent; /* Make the track transparent */
+.loginAndRegister-div .img-lg-div img {
+  width: 100%;
+  height: 100%;
+  -o-object-fit: cover;
+     object-fit: cover;
+  -o-object-position: center;
+     object-position: center;
 }
-
-.side-bar .nav-div::-webkit-scrollbar-thumb {
-    background-color: #888; /* Color of the scrollbar thumb */
-    border-radius: 3px; /* Rounded corners */
+.loginAndRegister-div .img-div img {
+  width: 100%;
+  height: 100%;
+  -o-object-fit: cover;
+     object-fit: cover;
+  -o-object-position: center;
+     object-position: center;
+  filter: brightness(40%);
 }
-
-.side-bar .nav-div::-webkit-scrollbar-thumb:hover {
-    background-color: #555; /* Color when hovered */
+.loginAndRegister-div .form-div {
+  z-index: 1;
 }
-
-/* Hide scrollbar for IE, Edge and Firefox */
-.side-bar .nav-div {
-    -ms-overflow-style: none;  /* IE and Edge */
-    scrollbar-width: thin;  /* Firefox */
+.loginAndRegister-div .form-div input {
+  width: 100%;
+  height: 50px;
+  margin: 10px 0;
+  padding: 0 10px;
+  border: none;
+  border-radius: 5px;
+  font-size: 16px;
+  background-color: white;
+  color: black;
+  border-radius: 10px;
 }
-
-/* Existing styles... */
-
-/* Nav item hover effect */
-.side-bar .nav-item {
-    transition: background-color 0.3s ease, color 0.3s ease;
-}
-
-.side-bar .nav-item:hover {
-    background-color: rgba(var(--bs-light-rgb), 0.1); /* Light overlay on hover */
-}
-
-.side-bar .nav-item a {
-    transition: color 0.3s ease;
-}
-
-.side-bar .nav-item:hover a {
-    color: var(--bs-primary) !important; /* Bootstrap primary color on hover */
-}
-
-.side-bar .nav-item:hover i {
-    color: var(--bs-primary); /* Change icon color on hover */
-}
+.loginAndRegister-div .form-div input:focus, .loginAndRegister-div .form-div input:active, .loginAndRegister-div .form-div input:valid {
+  background-color: white !important;
+  color: black;
+}/*# sourceMappingURL=style.css.map */

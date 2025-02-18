@@ -11,11 +11,13 @@ class OrderStatus(enum.IntEnum):
     DELIVERED = 3
     CANCELLED = 4
 
+
 # Enum for Payment Status
 class PaymentStatus(enum.IntEnum):
     PENDING = 1
     PAID = 2
     FAILED = 3
+
 
 class Customer(UserMixin, db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -43,6 +45,7 @@ class Customer(UserMixin, db.Model):
     def __repr__(self):
         return '<Customer {}>'.format(self.id)
     
+
 class Category(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(64), nullable=False)
@@ -68,7 +71,6 @@ class Product(db.Model):
     created_at = db.Column(db.DateTime, default=db.func.now())
     updated_at = db.Column(db.DateTime, default=db.func.now(), onupdate=db.func.now())
 
-
     category_link = db.relationship('category', backref='product', lazy=True)
     reviews = db.relationship('Review', backref='product', lazy=True)
     order_link = db.relationship('OrderItem', backref='product', lazy=True)
@@ -86,9 +88,9 @@ class Cart(db.Model):
     created_at = db.Column(db.DateTime, default=db.func.now())
     updated_at = db.Column(db.DateTime, default=db.func.now(), onupdate=db.func.now())
 
-
     def __repr__(self):
         return '<Cart {}>'.format(self.id)
+
 
 #create a table for the order and order_item
 class Order(db.Model):
@@ -98,7 +100,6 @@ class Order(db.Model):
     status = db.Column(db.Integer, default=OrderStatus.PENDING)
     created_at = db.Column(db.DateTime, default=db.func.now())
     updated_at = db.Column(db.DateTime, default=db.func.now(), onupdate=db.func.now())
-
 
     order_items = db.relationship('OrderItem', backref='order', lazy=True)
 
@@ -114,7 +115,6 @@ class OrderItem(db.Model):
     created_at = db.Column(db.DateTime, default=db.func.now())
     updated_at = db.Column(db.DateTime, default=db.func.now(), onupdate=db.func.now())
   
-
     def __repr__(self):
         return '<OrderItem {}>'.format(self.id)
 
@@ -127,9 +127,9 @@ class Payment(db.Model):
     created_at = db.Column(db.DateTime, default=db.func.now())
     updated_at = db.Column(db.DateTime, default=db.func.now(), onupdate=db.func.now())
 
-
     def __repr__(self):
         return '<Payment {}>'.format(self.id)
+
 
 #crate a table for the review
 class Review(db.Model):
@@ -140,7 +140,6 @@ class Review(db.Model):
     comment = db.Column(db.String(200), nullable=False)
     created_at = db.Column(db.DateTime, default=db.func.now())
     updated_at = db.Column(db.DateTime, default=db.func.now(), onupdate=db.func.now())
-
 
     def __repr__(self):
         return '<Review {}>'.format(self.id)
