@@ -27,22 +27,30 @@
             <div class="m-4 d-none d-lg-block"></div>
             <div class="d-flex flex-column align-items-center">
                 <h2 class="fs-4 fw-bold">Register</h2>
-                <form action="#" method="post" class="d-flex flex-column align-items-center">
+                <form method="post" class="d-flex flex-column align-items-center">
+                    
+                    {% for category, message in get_flashed_messages(with_categories=True) %}
+                        <div class="alert alert-{{ category }} alert-dismissible fade show" role="alert">
+                            {{ message }}
+                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                        </div>
+                    {% endfor %}
+
+                    {{ form.hidden_tag() }}
                     <div class="mb-1">
-                        <input type="text" id="username" name="username" placeholder="Username" required>
+                        {{ form.username(type="text", id="username", placeholder="Username") }}
                     </div>
                     <div class="mb-1">
-                        <input type="email" id="email" name="email" placeholder="Email" required>
+                        {{ form.email(type="email", id="email", placeholder="Email") }}
                     </div>
                     <div class="mb-1">
-                        <input type="password" id="password" name="password" placeholder="Password" required>
+                        {{ form.password(type="password", id="password", placeholder="Password") }}
                     </div>
                     <div class="mb-1">
-                        <input type="password" id="confirmPassword" name="confirmPassword" placeholder="Confirm Password" required>
+                        {{ form.confirm_password(type="password", id="confirmPassword", placeholder="Confirm Password") }}
                     </div>
-                    <button type="submit" class="btn btn-danger btn-lg mb-2">
-                        Register
-                    </button>
+                    
+                    {{ form.submit(type="submit", class="btn btn-danger btn-lg mb-2", value="Register") }}
                 </form>                                
                 <p class="fw-light">Already have an account? <a href="{{ url_for('auth.login') }}" class="text-danger">Login</a></p>
             </div>

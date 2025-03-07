@@ -1,0 +1,37 @@
+# python -m venv venv  #create venv
+# venv\Scripts\activate -- for windows
+# source venv/bin/activate --for macos and linux
+# pip install --upgrade pip  # Upgrade pip
+# pip install -r requirements.txt  # install dependencies
+
+# Remove-Item -Recurse -Force venv # force remove venv
+
+# pip install flask
+flask
+
+# pip install flask-wtf
+flask-wtf
+
+# pip install flask-sqlalchemy
+flask-sqlalchemy
+
+# pip install flask-migrate
+flask-migrate
+
+# pip install flask-login
+flask-login
+
+# pip install email-validator
+email-validator
+
+# Create a new directory named "static" and inside it, create a new folder named "css"
+
+# Create a new Python file named app.py
+
+
+# to install libaries for front-end
+# npm init -y
+
+# npm install bootstrap
+
+# npm install bootstrap-icons

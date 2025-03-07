@@ -11,13 +11,15 @@ class OrderStatus(enum.IntEnum):
     DELIVERED = 3
     CANCELLED = 4
 
+
 # Enum for Payment Status
 class PaymentStatus(enum.IntEnum):
     PENDING = 1
     PAID = 2
     FAILED = 3
 
-class User(UserMixin, db.Model):
+
+class Customer(UserMixin, db.Model):
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(64), index=True)
     email = db.Column(db.String(120), index=True, unique=True)
@@ -25,8 +27,9 @@ class User(UserMixin, db.Model):
     created_at = db.Column(db.DateTime, default=db.func.now())
     updated_at = db.Column(db.DateTime, default=db.func.now(), onupdate=db.func.now())
 
-    cart_items = db.relationship('Cart', backref='user', lazy=True) 
-    orders = db.relationship('Order', backref='user', lazy=True)
+
+    cart_items = db.relationship('Cart', backref='customer', lazy=True) 
+    orders = db.relationship('Order', backref='customer', lazy=True)
 
     @property
     def password(self):
@@ -40,7 +43,7 @@ class User(UserMixin, db.Model):
         return check_password_hash(self.password_hash, password)
 
     def __repr__(self):
-        return '<user {}>'.format(self.id)
+        return '<Customer {}>'.format(self.id)
     
 
 class Category(db.Model):
@@ -49,8 +52,10 @@ class Category(db.Model):
     created_at = db.Column(db.DateTime, default=db.func.now())
     updated_at = db.Column(db.DateTime, default=db.func.now(), onupdate=db.func.now())
 
+
     def __repr__(self):
         return '<Category {}>'.format(self.id)
+
 
 #create a table for the product
 class Product(db.Model):
@@ -61,32 +66,23 @@ class Product(db.Model):
     previous_price = db.Column(db.Float, nullable=False)
     category_id = db.Column(db.Integer, db.ForeignKey('category.id'), nullable=False)
     quantity = db.Column(db.Integer, nullable=False)
+    image_url = db.Column(db.String(200), nullable=False)
     flash_sale = db.Column(db.Boolean, default=False)
     created_at = db.Column(db.DateTime, default=db.func.now())
     updated_at = db.Column(db.DateTime, default=db.func.now(), onupdate=db.func.now())
 
-    category_link = db.relationship('Category', backref='products', lazy=True)
+    category_link = db.relationship('category', backref='product', lazy=True)
     reviews = db.relationship('Review', backref='product', lazy=True)
     order_link = db.relationship('OrderItem', backref='product', lazy=True)
-    images = db.relationship('Image', backref='product', lazy=True, cascade='all, delete-orphan')
 
     def __repr__(self):
         return '<Product {}>'.format(self.name)
 
-#create a table for the images
-class Image(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    product_id = db.Column(db.Integer, db.ForeignKey('product.id'), nullable=False)
-    image_url = db.Column(db.String(200), nullable=False)
-    created_at = db.Column(db.DateTime, default=db.func.now())
-
-    def __repr__(self):
-        return '<Image {}>'.format(self.image_url)
-
+    
 #create a table for the cart
 class Cart(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+    customer_id = db.Column(db.Integer, db.ForeignKey('customer.id'), nullable=False)
     product_id = db.Column(db.Integer, db.ForeignKey('product.id'), nullable=False)
     quantity = db.Column(db.Integer, nullable=False)
     created_at = db.Column(db.DateTime, default=db.func.now())
@@ -95,10 +91,11 @@ class Cart(db.Model):
     def __repr__(self):
         return '<Cart {}>'.format(self.id)
 
+
 #create a table for the order and order_item
 class Order(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+    customer_id = db.Column(db.Integer, db.ForeignKey('customer.id'), nullable=False)
     total_price = db.Column(db.Numeric(10, 2), nullable=False)
     status = db.Column(db.Integer, default=OrderStatus.PENDING)
     created_at = db.Column(db.DateTime, default=db.func.now())
@@ -133,10 +130,11 @@ class Payment(db.Model):
     def __repr__(self):
         return '<Payment {}>'.format(self.id)
 
+
 #crate a table for the review
 class Review(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+    customer_id = db.Column(db.Integer, db.ForeignKey('customer.id'), nullable=False)
     product_id = db.Column(db.Integer, db.ForeignKey('product.id'), nullable=False)
     rating = db.Column(db.Integer, nullable=False)
     comment = db.Column(db.String(200), nullable=False)
@@ -145,4 +143,3 @@ class Review(db.Model):
 
     def __repr__(self):
         return '<Review {}>'.format(self.id)
- 

@@ -20,9 +20,9 @@ def create_app():
     from .admin import admin 
     from .auth import auth
 
-    app.register_blueprint(views, prefix='/')
+    app.register_blueprint(views, prefix='/views')
     app.register_blueprint(admin, prefix='/admin')
-    app.register_blueprint(auth, prefix='/')
+    app.register_blueprint(auth, prefix='/auth')
 
     with app.app_context():
         create_database()
@@ -31,6 +31,6 @@ def create_app():
 
 def create_database():
     if not os.path.exists('website/' + DB_NAME):
-        from .models import Customer, Category, Product, Review, Cart, Order, OrderItem
+        from .models import User, Category, Product, Image, Review, Cart, Order, OrderItem
         db.create_all()
         print('Database created!')
