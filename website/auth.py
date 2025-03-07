@@ -18,22 +18,24 @@ def register():
         # check user already exists
         existing_user = User.query.filter_by(email=email).first()
         if existing_user:
-            flash("Email already registered. Please log in.", "warning")
-
-        if password == confirm_password:
-            new_user = User()
-            new_user.username = username
-            new_user.email = email
-            new_user.password = generate_password_hash(password)
+            flash("Email already registered. Please log in.", "danger")
+        else:
+            if password == confirm_password:
+                new_user = User()
+                new_user.username = username
+                new_user.email = email
+                new_user.password = generate_password_hash(password)
+                try:
+                    db.session.add(new_user)
+                    db.session.commit()
+                    flash('Account Successfully created!', 'success')
+                    return redirect(url_for('auth.login'))
+                except Exception as e:
+                    print(e)
+                    flash("An error occurred. Please try again.", "danger")
+            else:
+                flash("password not match.", "danger")
         
-        try:
-            db.session.add(new_user)
-            db.session.commit()
-            flash('Account Successfully created!', 'success')
-            return redirect(url_for('auth.login'))
-        except Exception as e:
-            print(e)
-            flash("An error occurred. Please try again.", "danger")
     
     return render_template('register.html', form=form)
 
@@ -55,29 +57,6 @@ def logout():
 
 # auth = Blueprint('auth', __name__)
 
-# @auth.route('/register', methods=["GET", "POST"])
-# def register():
-#     form = RegistrationForm()
-#     if form.validate_on_submit():
-#         # Check if user already exists
-#         existing_user = User.query.filter_by(email=form.email.data).first()
-#         if existing_user:
-#             flash("Email already registered. Please log in.", "warning")
-#             return redirect(url_for('auth.login'))
-
-#         # Create new user
-#         new_user = User(
-#             username=form.username.data,
-#             email=form.email.data,
-#             password=generate_password_hash(form.password.data)  # Hash password
-#         )
-#         db.session.add(new_user)
-#         db.session.commit()
-
-#         flash("Account created successfully! You can now log in.", "success")
-#         return redirect(url_for('auth.login'))
-
-#     return render_template('register.html', form=form)
 
 
 # @auth.route('/login', methods=["GET", "POST"])

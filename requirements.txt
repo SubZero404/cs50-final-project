@@ -4,7 +4,8 @@
 # pip install --upgrade pip  # Upgrade pip
 # pip install -r requirements.txt  # install dependencies
 
-# Remove-Item -Recurse -Force venv # force remove venv
+# Remove-Item -Recurse -Force venv # force remove venv in window
+# rm -rf venv # force remove venv in linux
 
 # pip install flask
 flask
@@ -35,3 +36,5 @@ email-validator
 # npm install bootstrap
 
 # npm install bootstrap-icons
+
+# npm install sweetalert2
