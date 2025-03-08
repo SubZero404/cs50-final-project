@@ -1,5 +1,7 @@
-from flask import Flask, send_from_directory
-from flask_sqlalchemy import SQLAlchemy
+from flask import Flask, send_from_directory 
+from flask_sqlalchemy import SQLAlchemy 
+from flask_login import LoginManager
+
 import os
 
 db = SQLAlchemy()
@@ -12,9 +14,15 @@ def create_app():
 
     db.init_app(app)
 
-    @app.route('/node_modules/<path:filename>')
-    def serve_node_modules(filename):
-        return send_from_directory(os.path.join(app.root_path, '..', 'node_modules'), filename)
+    login_manager = LoginManager()
+    login_manager.init_app(app)
+    login_manager.login_view = 'auth.login'
+
+    from website.models import User
+
+    @login_manager.user_loader
+    def load_user(id):
+        return User.query.get(int(id))
 
     from .views import views
     from .admin import admin 
@@ -26,6 +34,10 @@ def create_app():
 
     with app.app_context():
         create_database()
+
+    @app.route('/node_modules/<path:filename>')
+    def serve_node_modules(filename):
+        return send_from_directory(os.path.join(app.root_path, '..', 'node_modules'), filename)
 
     return app
 

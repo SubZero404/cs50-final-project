@@ -25,6 +25,9 @@ flask-login
 # pip install email-validator
 email-validator
 
+# pip install werkzeug
+werkzeug
+
 # Create a new directory named "static" and inside it, create a new folder named "css"
 
 # Create a new Python file named app.py
