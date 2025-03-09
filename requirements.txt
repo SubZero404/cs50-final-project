@@ -41,3 +41,5 @@ werkzeug
 # npm install bootstrap-icons
 
 # npm install sweetalert2
+
+# npm install @glidejs/glide

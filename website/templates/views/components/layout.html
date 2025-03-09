@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}{% endblock %}</title>
+    <link rel="stylesheet" href="{{ url_for('serve_node_modules', filename='bootstrap/dist/css/bootstrap.min.css') }}">
+    <link rel="stylesheet" href="{{ url_for('serve_node_modules', filename='bootstrap-icons/font/bootstrap-icons.css') }}">
+    <link rel="stylesheet" href="{{ url_for('serve_node_modules', filename='sweetalert2/dist/sweetalert2.min.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+
+    <!-- Glide.js -->
+    <link rel="stylesheet" href="{{ url_for('serve_node_modules', filename='@glidejs/glide/dist/css/glide.core.min.css') }}">
+    <link rel="stylesheet" href="{{ url_for('serve_node_modules', filename='@glidejs/glide/dist/css/glide.theme.min.css') }}">
+
+    <!-- link google font  -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lobster&family=Playwrite+IT+Moderna:wght@100..400&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Lobster&family=Playwrite+IT+Moderna:wght@100..400&family=Yrsa:ital,wght@0,300..700;1,300..700&display=swap" rel="stylesheet">
+</head>
+<body>
+    {% block body %}{% endblock %}
+    <script src="{{ url_for('serve_node_modules', filename='bootstrap/dist/js/bootstrap.bundle.min.js') }}"></script>
+    <script src="{{ url_for('serve_node_modules', filename='sweetalert2/dist/sweetalert2.all.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+
+    <!-- Glide.js -->
+    <script src="{{ url_for('serve_node_modules', filename='@glidejs/glide/dist/glide.min.js') }}"></script>
+</body>
+</html>

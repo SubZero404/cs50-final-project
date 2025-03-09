@@ -1,0 +1,38 @@
+<section class="container-fluid my-5 product-section">
+    <div class="container py-3">
+        <div class="d-flex justify-content-between">
+            <div class="section-title d-flex flex-row align-items-center">
+                <div class="p-2 h-100 me-2 bg-primary d-inline"></div>
+                <h2 class="text-primary fs-5 text-uppercase mb-0">Our Product</h2>
+            </div>
+            <a href="#" class="view-all-link text-decoration-none text-uppercase">
+                view all <i class="bi bi-caret-right-fill"></i>
+            </a>
+        </div>
+        <div class="container d-flex flex-wrap justify-content-around m-0 p-0 mt-3">
+            {% for i in range(12) %}
+                <div class="col-6 col-md-4 col-lg-2">
+                    <div class="card">
+                        <div class="card-body p-1">
+                            <img src="{{ url_for('static', filename='img/views/img/sneaker (3).jpg') }}" alt="sneaker">
+                        </div>
+                        <div class="card-footer">
+                            <span class="fs-6 fw-light text-secondary">sneaker</span>
+                            <h3 class="mb-0 fs-6">All Star Sneaker</h3>
+                            <div class="d-flex flex-wrap justify-content-between justify-content-center">
+                                <p class="mb-0 text-danger fw-bold">$100</p>
+                                <span class="stars text-warning">
+                                    <i class="bi bi-star-fill"></i>
+                                    <i class="bi bi-star-fill"></i>
+                                    <i class="bi bi-star-fill"></i>
+                                    <i class="bi bi-star"></i>
+                                    <i class="bi bi-star"></i>
+                                </span>                                
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>

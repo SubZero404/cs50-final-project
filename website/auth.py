@@ -1,7 +1,7 @@
 from flask import Blueprint, render_template, redirect, flash, url_for
 from .forms import RegistrationForm, LoginForm
 from .models import User
-from flask_login import login_user, logout_user, login_required
+from flask_login import current_user, login_user, logout_user, login_required
 from werkzeug.security import generate_password_hash, check_password_hash
 from . import db
 
@@ -9,6 +9,9 @@ auth = Blueprint('auth',__name__)
 
 @auth.route('/register', methods=['GET','POST'])
 def register():
+    if current_user.is_authenticated:
+        return redirect(url_for('views.index'))
+     
     form = RegistrationForm()
     if form.validate_on_submit():
         username = form.username.data
@@ -41,6 +44,9 @@ def register():
 
 @auth.route('/login', methods=['GET','POST'])
 def login():
+    if current_user.is_authenticated:
+        return redirect(url_for('views.index'))
+    
     form = LoginForm()
     if form.validate_on_submit():
         email = form.email.data
@@ -52,14 +58,13 @@ def login():
             if user.is_active:
                 login_user(user)
                 flash("Login successful!", "success")
-                return redirect(url_for('admin.dashboard'))
+                return redirect(url_for('views.index'))
             else:
                 flash("Your account is inactive. Please contact support for assistance.", "danger")
         else:
             flash("Login failed. Please check your email and password.", "danger")
-
-
     return render_template('login.html', form=form)
+
 
 @auth.route('/logout', methods=['GET','POST'])
 @login_required

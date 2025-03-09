@@ -1,0 +1,44 @@
+<section class="container my-5">
+    <div class="d-flex justify-content-center">
+        <div class="glide shadow">
+            <div class="glide__track" data-glide-el="track">
+                <ul class="glide__slides">
+                    <li class="glide__slide">
+                        <img id="slide-1" src="{{ url_for('static', filename='img/views/img/sneaker.jpg') }}" alt="sneaker">
+                    </li>
+                    <li class="glide__slide">
+                        <img id="slide-2" src="{{ url_for('static', filename='img/views/img/bicycle.jpg') }}" alt="bicycle">
+                    </li>
+                    <li class="glide__slide">
+                        <img id="slide-3" src="{{ url_for('static', filename='img/views/img/watch.jpg') }}" alt="watch">
+                    </li>
+                    <li class="glide__slide">
+                        <img id="slide-4" src="{{ url_for('static', filename='img/views/img/bag.jpg') }}" alt="bag">
+                    </li>
+                    <li class="glide__slide">
+                        <img id="slide-5" src="{{ url_for('static', filename='img/views/img/controller.jpg') }}" alt="controller">
+                    </li>
+                </ul>
+                <div class="glide__bullets" data-glide-el="controls[nav]">
+                    <button class="glide__bullet" data-glide-dir="=0"></button>
+                    <button class="glide__bullet" data-glide-dir="=1"></button>
+                    <button class="glide__bullet" data-glide-dir="=2"></button>
+                    <button class="glide__bullet" data-glide-dir="=3"></button>
+                    <button class="glide__bullet" data-glide-dir="=4"></button>
+                </div>
+            </div>
+          </div>
+    </div>
+</section>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+    new Glide('.glide', {
+        type: 'carousel',  
+        perView: 1,        
+        focusAt: 'center', 
+        autoplay: 6000,
+    }).mount();
+    });
+
+</script>

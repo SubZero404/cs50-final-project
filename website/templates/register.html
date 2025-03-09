@@ -1,4 +1,4 @@
-{% extends 'layout.html' %}
+{% extends 'views/components/layout.html' %}
 
 {% block title %}Register{% endblock %}
 
@@ -29,7 +29,7 @@
                 <h2 class="fs-4 fw-bold">Register</h2>
                 <form method="post" class="d-flex flex-column align-items-center">
                     
-                    {% include "flash_alert.html" %}
+                    {% include "views/components/flash_alert.html" %}
 
                     {{ form.hidden_tag() }}
                     <div class="mb-1">
