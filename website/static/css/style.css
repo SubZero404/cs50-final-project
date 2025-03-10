@@ -530,13 +530,13 @@ footer .copyright {
      object-fit: cover;
   -o-object-position: center;
      object-position: center;
-  filter: blur(2px);
+  filter: blur(5px);
 }
 .contact-section .contact-info .background-img div {
   position: absolute;
   top: 0;
   left: 0;
-  background-color: rgba(255, 255, 255, 0.5843137255);
+  background-color: rgba(255, 255, 255, 0.6);
 }
 .contact-section .contact-form {
   /* Remove default borders and style the form inputs */
@@ -627,4 +627,84 @@ footer .copyright {
 .product-detail .detail-div .product-img .img-select .img-item:hover {
   opacity: 0.8;
   transition: all 0.75s ease;
+}
+
+.change-password-section {
+  /* Contact Information Section */
+  min-height: 90vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  /* Responsive Design */
+}
+.change-password-section .password-requirement {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 300px;
+  overflow: hidden;
+  border-radius: 5px;
+}
+.change-password-section .password-requirement .background-img img {
+  width: 100%;
+  height: 100%;
+  -o-object-fit: cover;
+     object-fit: cover;
+  -o-object-position: center;
+     object-position: center;
+  filter: blur(3px);
+}
+.change-password-section .password-requirement .background-img div {
+  position: absolute;
+  top: 0;
+  left: 0;
+  background-color: rgba(255, 255, 255, 0.4588235294);
+}
+.change-password-section .change-password-form {
+  /* Remove default borders and style the form inputs */
+  /* Style the input fields and textarea when focused */
+  /* Placeholder styling */
+  /* Optional: Add some space between the inputs */
+}
+.change-password-section .change-password-form input:not([type=submit]) {
+  border: 1px solid rgba(175, 175, 175, 0.219);
+  outline: none;
+  padding: 10px;
+  width: 100%;
+  box-sizing: border-box;
+  font-size: 16px;
+  border-radius: 5px;
+  background-color: transparent;
+  color: #333;
+}
+.change-password-section .change-password-form input:focus:not([type=submit]) {
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.25); /* Light blue glow on focus */
+  background-color: #f7f7f7; /* Light background when focused */
+}
+.change-password-section .change-password-form input::-moz-placeholder:not([type=submit]) {
+  color: #888;
+  font-style: italic;
+}
+.change-password-section .change-password-form input::placeholder:not([type=submit]) {
+  color: #888;
+  font-style: italic;
+}
+.change-password-section .change-password-form .mb-3 {
+  margin-bottom: 15px;
+}
+@media (max-width: 768px) {
+  .change-password-section .contact-info {
+    text-align: left;
+    padding: 40px;
+  }
+  .change-password-section .contact-info .content {
+    padding: 15px;
+  }
+  .change-password-section .contact-form {
+    padding: 15px;
+  }
+  .change-password-section .contact-form button {
+    font-size: 16px;
+  }
 }/*# sourceMappingURL=style.css.map */

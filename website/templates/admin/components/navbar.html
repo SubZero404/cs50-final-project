@@ -14,17 +14,17 @@
                 <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-expanded="false">
                     <i class="bi bi-person-fill"></i> account
                 </a>
-                    <ul class="dropdown-menu dropdown-menu-end">
-                        <li><a class="dropdown-item" href="#">Profile</a></li>
-                        <li><a class="dropdown-item" href="#">Another action</a></li>
-                        <li><a class="dropdown-item" href="#">change password</a></li>
-                        <li><hr class="dropdown-divider"></li>
-                        <li>
-                            <form action="{{ url_for('auth.logout') }}" method="post" style="display: inline;">
-                                <button type="submit" class="dropdown-item">SignOut</button>
-                            </form>
-                        </li>
-                    </ul>
+                <ul class="dropdown-menu dropdown-menu-end">
+                    <li><a class="dropdown-item" href="#">Profile</a></li>
+                    <li><a class="dropdown-item" href="#">Another action</a></li>
+                    <li><a class="dropdown-item" href="#">change password</a></li>
+                    <li><hr class="dropdown-divider"></li>
+                    <li>
+                        <form action="{{ url_for('auth.logout') }}" method="post" style="display: inline;">
+                            <button type="submit" class="dropdown-item">SignOut</button>
+                        </form>
+                    </li>
+                </ul>
             </div>
         </div>
       </div>

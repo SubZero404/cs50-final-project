@@ -595,13 +595,13 @@ footer {
                 height: 100%;
                 object-fit: cover;
                 object-position: center;
-                filter: blur(2px);
+                filter: blur(5px);
             }
             div {
                 position: absolute;
                 top: 0;
                 left: 0;
-                background-color: #ffffff95;
+                background-color: #ffffff99;
             }
         }
     }
@@ -701,6 +701,94 @@ footer {
                     }
                 }
             }
+        }
+    }
+}
+
+
+.change-password-section {
+    /* Contact Information Section */
+
+    min-height: 90vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    
+    .password-requirement {
+        position: relative;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-height: 300px;
+        overflow: hidden;
+        border-radius: 5px;
+        .background-img {
+            img {
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
+                object-position: center;
+                filter: blur(3px);
+            }
+            div {
+                position: absolute;
+                top: 0;
+                left: 0;
+                background-color: #ffffff75;
+            }
+        }
+    }
+
+    .change-password-form {
+        /* Remove default borders and style the form inputs */
+        input:not([type="submit"]) {
+            border: 1px solid rgba(175, 175, 175, 0.219);
+            outline: none;
+            padding: 10px;
+            width: 100%;
+            box-sizing: border-box;
+            font-size: 16px;
+            border-radius: 5px;
+            background-color: transparent;
+            color: #333;
+        }
+
+        /* Style the input fields and textarea when focused */
+        input:focus:not([type="submit"]) {
+            box-shadow: 0 0 5px rgba(0, 0, 0, 0.25); /* Light blue glow on focus */
+            background-color: #f7f7f7; /* Light background when focused */
+        }
+
+        /* Placeholder styling */
+        input::placeholder:not([type="submit"]) {
+            color: #888;
+            font-style: italic;
+        }
+
+        /* Optional: Add some space between the inputs */
+        .mb-3 {
+            margin-bottom: 15px;
+        }
+
+    }
+
+    /* Responsive Design */
+    @media (max-width: 768px) {
+        .contact-info {
+            text-align: left;
+            padding: 40px;
+        }
+
+        .contact-info .content {
+            padding: 15px;
+        }
+
+        .contact-form {
+            padding: 15px;
+        }
+
+        .contact-form button {
+            font-size: 16px;
         }
     }
 }
