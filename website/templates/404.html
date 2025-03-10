@@ -1,0 +1,35 @@
+{% extends 'views/components/layout.html' %}
+
+{% block title %} 404 {% endblock %}
+
+{% block body %}
+
+<style>
+    h1 {
+        font-size: 17.5rem;
+        @media (max-width: 768px) {
+            font-size: 10rem;
+        }
+        @media (max-width: 576px) {
+            font-size: 7rem;
+        }
+        letter-spacing: 20px;
+        background: url(../static/img/views/background/space.jpg);
+        background-size: cover;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+        -webkit-background-clip: text;
+    }
+</style>
+
+<div class="container-fluid vh-100 justify-content-center align-content-center">
+    <div class="text-center d-flex justify-content-center">
+        <div class="col-12 col-md-9 col-lg-6">
+            <h1 class="lobster-regular">404</h1>
+            <p class="lobster-regular fs-3">Oops! The page you're looking for doesn't exist.</p>
+            <a href="{{ url_for('views.index' ) }}" class="btn btn-outline-dark">Go Home</a>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
