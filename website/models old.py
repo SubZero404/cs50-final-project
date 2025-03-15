@@ -1,6 +1,7 @@
 from . import db
 from flask_login import UserMixin
 from datetime import datetime
+from slugify import slugify
 from werkzeug.security import check_password_hash, generate_password_hash
 import enum
 
@@ -49,10 +50,14 @@ class Customer(UserMixin, db.Model):
 class Category(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(64), nullable=False)
+    slug = db.Column(db.String(64), nullable=False, unique=True)
     created_at = db.Column(db.DateTime, default=db.func.now())
     updated_at = db.Column(db.DateTime, default=db.func.now(), onupdate=db.func.now())
 
-
+    def __init__(self, name):
+        self.name = name
+        self.slug = slugify(name)
+        
     def __repr__(self):
         return '<Category {}>'.format(self.id)
 

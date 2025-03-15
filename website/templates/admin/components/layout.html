@@ -18,12 +18,12 @@
             <div class="col-2 p-0">
                 {% include "admin/components/sidebar.html" %}
             </div>
-            <div class="col-10 p-0">
+            <div class="col-10 px-2 vh-100 overflow-y-scroll scrollbar-width-0">
                 {% include "admin/components/navbar.html" %}
+                {% block body %}{% endblock %}
             </div>
         </div>
     </div>
-    {% block body %}{% endblock %}
     <script src="{{ url_for('serve_node_modules', filename='bootstrap/dist/js/bootstrap.bundle.min.js') }}"></script>
     <script src="{{ url_for('serve_node_modules', filename='sweetalert2/dist/sweetalert2.all.min.js') }}"></script>
     <script src="{{ url_for('static', filename='js/script.js') }}"></script>

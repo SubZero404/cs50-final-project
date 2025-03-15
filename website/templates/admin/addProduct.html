@@ -1,0 +1,53 @@
+{% extends 'admin/components/layout.html' %}
+
+{% block body %}
+<div class="m-3">
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item">
+                <i class="bi bi-house"></i>
+                <a href="{{ url_for('admin.dashboard' ) }}"> Dashboard</a>
+            </li>
+            <li class="breadcrumb-item">
+                <a href="{{ url_for('admin.productLists') }}"> Products</a>
+            </li>
+            <li class="breadcrumb-item active">Add</li>
+        </ol>
+    </nav>
+</div>
+
+
+<div class="container-fluid p-0 window-session">
+    <div class="card bg-black rounded border-0 w-100 h-100">
+        <!-- card header -->
+        <div class="card-header d-flex justify-content-between">
+            <div class="d-flex align-items-center">
+                <i class="bi bi-plus-circle-fill fs-4"></i>
+                <span class="fw-bolder ms-2">Create Post</span>
+            </div>
+            <div class="d-flex align-items-center">
+                <button class="btn btn-dark custom-btn me-2" onclick="toggle_window(this)">
+                    <i class="bi bi-arrows-angle-expand"></i>
+                    <i class="bi bi-arrows-angle-contract d-none"></i>
+                </button>
+                <a href="{{ url_for('admin.dashboard' ) }}" class="btn btn-dark custom-btn" >
+                    <i class="bi bi-list-ul"></i>
+                </a>
+            </div>
+        </div>
+        <!-- card body -->
+         <div class="card-body">
+            
+         </div>
+    </div>
+</div>
+
+<script>
+    function toggle_window(e) {
+        e.children[0].classList.toggle('d-none')
+        e.children[1].classList.toggle('d-none')
+        document.querySelector('.window-session').classList.toggle('window-expand')
+    }
+</script>
+
+{% endblock %}

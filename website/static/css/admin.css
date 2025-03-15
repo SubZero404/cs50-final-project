@@ -1,46 +1,58 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.window-expand {
+  position: fixed;
+  width: 100%;
+  height: 100vh;
+  top: 0;
+  left: 0;
+  z-index: 10000;
+}
+
+.scrollbar-width-0::-webkit-scrollbar {
+  width: 0;
+}
+
 /* Customize sidebar scrollbar */
+.side-bar {
+  /* Nav item hover effect */
+}
 .side-bar .nav-div {
   overflow-y: auto; /* Allow vertical scrolling */
   scrollbar-width: thin; /* For Firefox */
   scrollbar-color: #888 transparent; /* For Firefox */
   -ms-overflow-style: none; /* IE and Edge */
+  /* For Webkit browsers (Chrome, Safari, Edge) */
 }
-
-/* For Webkit browsers (Chrome, Safari, Edge) */
 .side-bar .nav-div::-webkit-scrollbar {
   width: 6px; /* Slightly wider for better visibility */
 }
-
 .side-bar .nav-div::-webkit-scrollbar-track {
   background: transparent; /* Make the track transparent */
 }
-
 .side-bar .nav-div::-webkit-scrollbar-thumb {
   background-color: #888; /* Color of the scrollbar thumb */
   border-radius: 3px; /* Rounded corners */
 }
-
 .side-bar .nav-div::-webkit-scrollbar-thumb:hover {
   background-color: #555; /* Color when hovered */
 }
-
-/* Nav item hover effect */
 .side-bar .nav-item {
   transition: background-color 0.3s ease, color 0.3s ease;
 }
-
 .side-bar .nav-item:hover {
   background-color: rgba(var(--bs-light-rgb), 0.1); /* Light overlay on hover */
 }
-
-.side-bar .nav-item a {
-  transition: color 0.3s ease;
-}
-
 .side-bar .nav-item:hover a {
   color: var(--bs-primary) !important; /* Bootstrap primary color on hover */
 }
-
 .side-bar .nav-item:hover i {
   color: var(--bs-primary); /* Change icon color on hover */
+}
+.side-bar .nav-item a {
+  transition: color 0.3s ease;
 }/*# sourceMappingURL=admin.css.map */

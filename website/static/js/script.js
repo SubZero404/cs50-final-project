@@ -16,3 +16,22 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     });
 });
+
+function confirmDelete(event, form) {
+    event.preventDefault(); // Prevent the form from being submitted immediately
+
+    Swal.fire({
+        title: "Are you sure?",
+        text: "You want to delete this category?",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Yes, delete it!"
+    }).then((result) => {
+        if (result.isConfirmed) {
+            // Now submit the form after confirmation
+            form.submit();
+        }
+    });
+}

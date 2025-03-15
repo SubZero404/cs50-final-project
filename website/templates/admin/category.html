@@ -1,0 +1,160 @@
+{% extends 'admin/components/layout.html' %}
+
+{% block body %}
+<div class="m-3">
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item">
+                <i class="bi bi-house"></i>
+                <a href="{{ url_for('admin.dashboard' ) }}"> Dashboard</a>
+            </li>
+            <li class="breadcrumb-item active">Category</li>
+        </ol>
+    </nav>
+</div>
+
+        <!-- card start -->
+    <div class="container-fluid p-0 window-session">
+        <div class="card bg-black border-0 w-100">
+                <!-- card header -->
+            <div class="card-header d-flex justify-content-between mx-2">
+                <div class="d-flex align-items-center">
+                    <i class="bi bi-collection-fill fs-4"></i>
+                    <span class="fw-bolder ms-2">Category</span>
+                </div>
+                <div class="d-flex align-items-center">
+                    <button class="btn btn-dark custom-btn me-2" onclick="toggle_window(this)">
+                        <i class="bi bi-arrows-angle-expand"></i>
+                        <i class="bi bi-arrows-angle-contract d-none"></i>
+                    </button>
+                    <button class="btn btn-dark custom-btn" onclick="toggle_new(this)">
+                        <!-- <i class="bi bi-plus @if(!old('id') and old('title')) d-none @else d-inline-block @endif"></i>
+                        <i class="bi bi-x-lg @if(!old('id') and old('title')) d-inline-block @else d-none @endif"></i> -->
+                        <i class="bi bi-plus d-inline-block"></i>
+                        <i class="bi bi-x-lg d-none"></i>
+                    </button>
+                </div>
+            </div>
+            <!-- card body -->
+            <div class="card-body" style="min-height: 65vh;">
+                <div class="container-fluid">
+                    <div class="row justify-content-center">
+                        <!-- new category form  -->
+                        <div class="col-12 d-none" id="category-new-form">
+                            <form method="post" class="w-100">
+                                {{ form.hidden_tag() }}
+                                <div class="d-flex flex-row align-items-center justify-content-center">
+                                    <div class="form-floating col-8 col-md-7 col-lg-6">
+                                        {{ form.name(class="form-control", id="floatingInput-category-create", placeholder="Category Name") }}
+                                        <label for="floatingInput-category-create">New Category</label>
+                                    </div>
+                                    <div class="col-3 d-flex align-items-start ms-3">
+                                        {{ form.submit(class="btn btn-outline-secondary btn-lg text-white") }} 
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                        <!-- category table -->
+                        <div class="col-12 mt-3">
+                            <table class="table table-striped table-hover text-center">
+                                <thead>
+                                    <tr>
+                                        <th>ID</th>
+                                        <th>CATEGORY NAME</th>
+                                        <th>POST COUNT</th>
+                                        <th>CREATED DATE</th>
+                                        <th>CONTROL</th>
+                                    </tr>
+                                </thead>
+                                <tbody class="table-group-divider fw-light">
+                                    {% for category in categories %}
+                                        <tr class="category-tr" id="category-tr-{{ category.id }}">
+                                            <th>{{ category.id }}</th>
+                                            <th>
+                                                <p class="my-0">{{ category.name }}</p>
+                                                <span class="badge bg-dark">{{ category.slug }}</span>
+                                            </th>
+                                            <th>
+                                                <p class="my-0">0</p>
+                                            </th>
+                                            <th>
+                                                <p class="my-0"><i class="bi bi-calendar me-1"></i>{{ category.updated_at.strftime('%d %b %Y') }}</p>
+                                                <p class="my-0"><i class="bi bi-clock me-1"></i>{{ category.updated_at.strftime('%I:%M %p') }}</p>
+                                            </th>
+                                            <th>
+                                                    <!-- to edit category -->
+                                                <button class="btn btn-dark custom-btn me-2" onclick="toggle_edit('{{ category.id }}')">
+                                                    <i class="bi bi-pencil-fill"></i>
+                                                </button>
+
+                                                    <!-- delete category form -->
+                                                    <form method="POST" action="{{ url_for('admin.deleteCategory', category_id=category.id) }}" style="display:inline;">
+                                                        <button type="submit" class="btn btn-dark custom-btn me-2" onclick="confirmDelete(event, this.form)">
+                                                            <i class="text-danger bi bi-trash-fill"></i>
+                                                        </button>
+                                                    </form>                                                    
+                                            </th>
+                                        </tr>
+                                        <tr class="d-none category-tr-edit" id="category-tr-edit-{{ category.id }}">
+                                            <!-- update category form -->
+                                            <form method="post">
+                                                {{ form.hidden_tag() }}
+                                                <input type="hidden" name="category_id" value="{{ category.id }}">
+                                                <th class="d-none d-lg-table-cell mt-2">{{ category.id }}</th>
+                                                <th colspan="3">
+                                                    <div class="form-floating">
+                                                        {{ form.name(class="form-control", value=category.name, id="floatingInput-category-update", placeholder="edit category") }}
+                                                        <label for="floatingInput-category-update">edit category</label>
+                                                    </div>
+                                                </th>
+                                                <th>
+                                                    <button type="submit" class="btn btn-dark custom-btn mt-2 me-2">
+                                                        <i class="text-success bi bi-check-lg"></i>
+                                                    </button>
+                                                    <button type="button" class="btn btn-dark custom-btn mt-2" onclick="toggle_edit('{{ category.id }}')">
+                                                        <i class="bi bi-x-lg"></i>
+                                                    </button>
+                                                </th>
+                                            </form>
+                                        </tr>
+                                    {% else %}
+                                        <tr>
+                                            <td colspan="5">
+                                                <p class="fs-1 mt-5 fw-bold text-secondary">No records found</p>
+                                            </td>
+                                        </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+        <!-- card end -->
+
+<script>
+    // category edit button call edit form
+
+    function toggle_edit(category_id) {
+        document.getElementById('category-tr-'+category_id).classList.toggle('d-none')
+        document.getElementById('category-tr-edit-' + category_id).classList.toggle('d-none')
+    }
+
+    function toggle_new(e) {
+        e.children[0].classList.toggle('d-none')
+        e.children[1].classList.toggle('d-none')
+        document.getElementById('category-new-form').classList.toggle('d-none')
+    }
+
+    function toggle_window(e) {
+        e.children[0].classList.toggle('d-none')
+        e.children[1].classList.toggle('d-none')
+        document.querySelector('.window-session').classList.toggle('window-expand')
+    }
+
+</script>
+
+{% endblock %}
