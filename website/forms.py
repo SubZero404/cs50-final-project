@@ -1,6 +1,7 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, PasswordField, SubmitField, HiddenField
-from wtforms.validators import DataRequired, Email, EqualTo, Length
+from wtforms import StringField, PasswordField, SubmitField, HiddenField, TextAreaField, FloatField, SelectField, FileField, MultipleFileField, IntegerField, BooleanField
+from wtforms.validators import DataRequired, Email, EqualTo, Length, NumberRange
+from flask_wtf.file import FileAllowed
 
 class RegistrationForm(FlaskForm):
     username = StringField('Username', validators=[DataRequired(), Length(min=2, max=20)])
@@ -24,3 +25,15 @@ class CategoryForm(FlaskForm):
     id = HiddenField('id')
     name = StringField('Category', validators=[DataRequired(), Length(min=2, max=64)]) 
     submit = SubmitField('Save')
+
+class ProductForm(FlaskForm):
+    name = StringField('Product Name', validators=[DataRequired(), Length(min=2, max=64)])
+    description = TextAreaField('Description', validators=[DataRequired()])
+    price = FloatField('Price', validators=[DataRequired(), NumberRange(min=0)])
+    previous_price = FloatField('Previous Price', validators=[DataRequired(), NumberRange(min=0)])
+    category_id = SelectField('Category', coerce=int, validators=[DataRequired()])
+    quantity = IntegerField('Quantity', validators=[DataRequired(), NumberRange(min=0)])
+    product_image = FileField('Product Image', validators=[DataRequired(), FileAllowed(['jpg', 'png', 'jpeg'])])
+    flash_sale = BooleanField('Flash Sale')
+    additional_images = MultipleFileField('Additional Images', render_kw={"multiple": True}, validators=[FileAllowed(['jpg', 'png', 'jpeg'])])
+    submit = SubmitField('submit')
