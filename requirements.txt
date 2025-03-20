@@ -31,6 +31,27 @@ werkzeug
 # pip install python-slugify
 python-slugify
 
+# pip install Flask-Migrate
+Flask-Migrate
+
+# _________ using flask-migrate __________
+# _________ create migration __________
+# flask db init
+# flask db migrate -m "Initial migration"
+# flask db upgrade
+
+# _________ create migration __________
+# flask db migrate -m "Add brands and categories" or flask db revision -m "Insert brands and categories"
+# flask db upgrade
+
+
+
+
+
+
+
+
+
 # Create a new directory named "static" and inside it, create a new folder named "css"
 
 # Create a new Python file named app.py
