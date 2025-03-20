@@ -26,6 +26,11 @@ class CategoryForm(FlaskForm):
     name = StringField('Category', validators=[DataRequired(), Length(min=2, max=64)]) 
     submit = SubmitField('Save')
 
+class BrandForm(FlaskForm):
+    id = HiddenField('id')
+    name = StringField('Brand', validators=[DataRequired(), Length(min=2, max=64)]) 
+    submit = SubmitField('Save')
+
 class ProductForm(FlaskForm):
     name = StringField('Product Name', validators=[DataRequired(), Length(min=2, max=64)])
     description = TextAreaField('Description', validators=[DataRequired()])

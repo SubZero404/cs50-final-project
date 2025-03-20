@@ -1,7 +1,7 @@
 from flask import Blueprint, render_template, flash, redirect, url_for, request
 from flask_login import login_required
-from .forms import CategoryForm, ProductForm
-from .models import Category, Product, Image
+from .forms import CategoryForm, ProductForm, BrandForm
+from .models import Category, Product, Image, Brand
 from slugify import slugify
 from werkzeug.utils import secure_filename
 import random
@@ -18,6 +18,7 @@ def dashboard():
     return render_template(path + 'dashboard.html')
 
 
+# product management--------------------------------
 @admin.route('/product_lists')
 @login_required
 def productLists():
@@ -83,6 +84,7 @@ def generate_unique_filename(filename, category='NOCATEGORY'):
     return unique_filename
 
 
+# category management--------------------------------
 @admin.route('/categories', methods=['GET', 'POST'])
 @login_required
 def manageCategory():
@@ -126,3 +128,49 @@ def deleteCategory(category_id):
     else:
         flash('Category not found', 'warning')
     return redirect(url_for('admin.manageCategory'))
+
+
+# brand management--------------------------------
+@admin.route('/brands', methods=['GET', 'POST'])
+@login_required
+def manageBrand():
+    form = BrandForm()
+    brands = Brand.query.order_by(Brand.created_at.desc()).all()
+
+    #update & delete brand
+    if form.validate_on_submit():
+        brand_id = request.form.get("brand_id")
+        name = form.name.data
+        slug = slugify(name)
+
+        if brand_id:
+            brand = Brand.query.filter_by(id = brand_id).first()
+            brand.name = name
+            brand.slug = slug
+            db.session.commit()
+            flash('Brand updated successfully', 'success')
+        else:
+            existing_brand = Brand.query.filter_by(slug = slug).first()
+            if existing_brand:
+                flash('Brand already exists', 'danger')
+            else:
+                brand = Brand(name=name, slug=slug)
+                db.session.add(brand)
+                db.session.commit()
+                flash('Brand added successfully', 'success')
+        return redirect(url_for('admin.manageBrand'))
+    
+    return render_template(path + 'brand.html', form=form, brands=brands)
+
+
+@admin.route('/delete_brand/<int:brand_id>', methods=['GET', 'POST'])
+@login_required
+def deleteBrand(brand_id):
+    brand = Brand.query.filter_by(id=brand_id).first()
+    if brand:
+        db.session.delete(brand)
+        db.session.commit()
+        flash('Brand deleted successfully', 'success')
+    else:
+        flash('Brand not found', 'warning')
+    return redirect(url_for('admin.manageBrand'))
