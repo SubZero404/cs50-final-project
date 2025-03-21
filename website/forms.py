@@ -37,6 +37,7 @@ class ProductForm(FlaskForm):
     price = FloatField('Price', validators=[DataRequired(), NumberRange(min=0)])
     previous_price = FloatField('Previous Price', validators=[DataRequired(), NumberRange(min=0)])
     category_id = SelectField('Category', coerce=int, validators=[DataRequired()])
+    brand_id = SelectField('Brand', coerce=int, validators=[DataRequired()])
     quantity = IntegerField('Quantity', validators=[DataRequired(), NumberRange(min=0)])
     product_image = FileField('Product Image', validators=[DataRequired(), FileAllowed(['jpg', 'png', 'jpeg'])])
     flash_sale = BooleanField('Flash Sale')

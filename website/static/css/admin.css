@@ -55,4 +55,80 @@
 }
 .side-bar .nav-item a {
   transition: color 0.3s ease;
+}
+
+.product-section .photo-display-div {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+  background: rgba(255, 255, 255, 0.0823529412);
+  -webkit-backdrop-filter: blur(5px);
+          backdrop-filter: blur(5px);
+  z-index: 10000;
+}
+.product-section .photo-display-div .carousel-inner {
+  height: 75vh !important;
+}
+.product-section .photo-display-div .carousel-item {
+  height: 75vh !important;
+}
+.product-section .photo-display-div .carousel-item div {
+  position: absolute;
+  top: 0;
+  right: 0;
+  padding: 5px 0;
+}
+.product-section .photo-display-div .carousel-item div span {
+  transform: scale(0.8);
+}
+.product-section .photo-display-div .carousel-item img {
+  width: 100%;
+  height: 100%;
+  -o-object-fit: contain;
+     object-fit: contain;
+  -o-object-position: center;
+     object-position: center;
+}
+.product-section .photo-display-div .delete-old-photo-div {
+  height: 75vh !important;
+}
+.product-section .photo-display-div .delete-old-photo-div .delete-photo-div {
+  height: 150px;
+  width: 150px;
+  position: relative;
+}
+.product-section .photo-display-div .delete-old-photo-div .delete-photo-div img {
+  width: 100%;
+  height: 100%;
+  -o-object-fit: cover;
+     object-fit: cover;
+  -o-object-position: center;
+     object-position: center;
+  transition: all 0.25s ease-in;
+}
+.product-section .photo-display-div .delete-old-photo-div .delete-photo-div div {
+  position: absolute;
+  top: 0;
+  right: 0;
+  transform: scale(1.2);
+}
+.product-section .photo-display-div .delete-old-photo-div .delete-photo-div div input {
+  cursor: pointer;
+}
+.product-section .photo-display-div .delete-old-photo-div .delete-photo-div:hover img {
+  transform: scale(1.1);
+}
+.product-section #feature-image-div {
+  width: 150px;
+  height: 150px;
+}
+.product-section #feature-image-div img {
+  width: 100%;
+  height: 100%;
+  -o-object-position: center;
+     object-position: center;
+  -o-object-fit: cover;
+     object-fit: cover;
 }/*# sourceMappingURL=admin.css.map */

@@ -72,6 +72,7 @@ class Product(db.Model):
     price = db.Column(db.Float, nullable=False)
     previous_price = db.Column(db.Float, nullable=False)
     category_id = db.Column(db.Integer, db.ForeignKey('category.id'), nullable=False)
+    brand_id = db.Column(db.Integer, db.ForeignKey('brand.id'), nullable=False)
     quantity = db.Column(db.Integer, nullable=False)
     product_image = db.Column(db.String(200), nullable=False)
     flash_sale = db.Column(db.Boolean, default=False)
@@ -79,6 +80,7 @@ class Product(db.Model):
     updated_at = db.Column(db.DateTime, default=db.func.now(), onupdate=db.func.now())
 
     category_link = db.relationship('Category', backref='products', lazy=True)
+    brand_link = db.relationship('Brand', backref='products', lazy=True)
     reviews = db.relationship('Review', backref='product', lazy=True)
     order_link = db.relationship('OrderItem', backref='product', lazy=True)
     images = db.relationship('Image', backref='product', lazy=True, cascade='all, delete-orphan')

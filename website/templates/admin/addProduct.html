@@ -17,8 +17,8 @@
 </div>
 
 
-<div class="container-fluid p-0 window-session">
-    <div class="card bg-black rounded border-0 w-100 h-100">
+<div class="container-fluid p-0 window-session product-section">
+    <div class="card bg-black rounded border-0 w-100 h-100 mb-4">
         <!-- card header -->
         <div class="card-header d-flex justify-content-between">
             <div class="d-flex align-items-center">
@@ -55,53 +55,117 @@
                 
                     <div class="row">
                         <div class="col-12 col-lg-9">
-                            <div class="mb-3">
+                            <div class="mb-3 px-4">
                                 {{ form.name.label(class="form-label") }}
                                 {{ form.name(class="form-control") }}
                             </div>
                     
-                            <div class="mb-3">
+                            <div class="mb-3 px-4">
                                 {{ form.description.label(class="form-label") }}
                                 {{ form.description(class="form-control", rows=4) }}
                             </div>
-                    
-                            <div class="mb-3">
-                                {{ form.product_image.label(class="form-label") }}
-                                {{ form.product_image(class="form-control") }}
+
+                            <div class="d-flex">
+                                <div class="mb-3 col-6 px-4">
+                                    <p class="form-label mb-3"> Additional Images <span class="badge text-bg-danger photos-count-badge">0</span></p>
+                                    <div class="d-flex flex-row justify-content-start align-items-center">
+                                        {{ form.additional_images(class="d-none", multiple="multiple") }}
+                                        <label for="additional_images" class="input-icon-label btn btn-outline-light me-2">
+                                            <i class="bi bi-images me-2"></i>
+                                            <span class="fw-bold"> Upload Image</span>
+                                        </label>
+                                        <button type="button" onclick="togglePhotoDisplayDiv()" class="btn btn-outline-success"><i class="bi bi-eye-fill"></i></button>
+                                    </div>
+                                </div>
+    
+                                <div class="mb-3 col-6 px-4">
+                                    <p class=" form-label mb-3"> Feature Image</p>
+                                    {{ form.product_image(class="d-none") }}
+                                    <input type="file" id="product_image" value="" class="d-none" name="feature-image" accept="image/jpeg,image/png">
+                                    <label for="product_image" class="input-icon-label btn btn-outline-light">
+                                        <i class="bi bi-laptop me-2"></i>
+                                        <span class="fw-bold">Upload Image</span>
+                                    </label>
+                                </div>
+                            </div>
+                            
+
+                            <!-- additional image display div -->
+                            <div class="photo-display-div d-none justify-content-center align-items-center">
+                                <div class="col-lg-6 col-12 bg-black rounded shadow-lg">
+                                    <div class="w-100 border-bottom d-flex justify-content-between align-items-center bg-dark">
+                                        <div class="d-flex flex-row align-items-center">
+                                            <i class="bi bi-images text-danger ms-4 fs-4"></i>
+                                            <h6 class="ms-1 mb-0">VIEW ADDITIONAL <span class="text-danger">IMAGES</span></h6>
+                                        </div>
+                                        <div class="d-flex flex-row mt-1">
+                                            <button type="button" class="btn btn-light custom-btn btn-sm m-2" onclick="togglePhotoDisplayDiv()">
+                                                <i class="bi bi-x" style="transform: scale(2)"></i>
+                                            </button>
+                                        </div>
+
+                                    </div>
+                                    <div id="carouselExampleIndicators" class="carousel slide">
+                                        <div class="carousel-indicators position-absolute" style="top: 90% !important; height: 20px;"></div>
+                                        <div class="carousel-inner">
+
+                                        </div>
+                                        <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
+                                            <span class="bi bi-chevron-left" aria-hidden="true" style="transform: scale(3)"></span>
+                                            <span class="visually-hidden">Previous</span>
+                                        </button>
+                                        <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
+                                            <span class="bi bi-chevron-right" aria-hidden="true" style="transform: scale(3)"></span>
+                                            <span class="visually-hidden">Next</span>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- end of additional image display div -->
+                            
+
+                            <div class="d-flex">
+                                <div class="mb-3 col-6 px-4">
+                                    {{ form.price.label(class="form-label") }}
+                                    {{ form.price(class="form-control", type="number") }}
+                                </div>
+                        
+                                <div class="mb-3 col-6 px-4">
+                                    {{ form.previous_price.label(class="form-label") }}
+                                    {{ form.previous_price(class="form-control", type="number") }}
+                                </div>
                             </div>
                     
-                            <div class="mb-3">
-                                {{ form.additional_images.label(class="form-label") }}
-                                {{ form.additional_images(class="form-control", multiple="multiple") }}
-                            </div>
-                    
-                            <div class="form-check mb-3">
+                            <div class="mb-3 px-4">
                                 {{ form.flash_sale(class="form-check-input") }}
                                 {{ form.flash_sale.label(class="form-check-label") }}
                             </div>
+
                         </div>
                         <div class="col-12 col-lg-3">
-                            <div class="mb-3 col-6 col-lg-12">
-                                {{ form.price.label(class="form-label") }}
-                                {{ form.price(class="form-control", type="number") }}
-                            </div>
-                    
-                            <div class="mb-3 col-6 col-lg-12">
-                                {{ form.previous_price.label(class="form-label") }}
-                                {{ form.previous_price(class="form-control", type="number") }}
-                            </div>
-                    
-                            <div class="mb-3 col-6 col-lg-12">
+
+                            <div class="mb-3 col-12">
                                 {{ form.category_id.label(class="form-label") }}
                                 {{ form.category_id(class="form-select") }}
                             </div>
-                    
-                            <div class="mb-3 col-6 col-lg-12">
+
+                            <div class="mb-3 col-12">
+                                {{ form.brand_id.label(class="form-label") }}
+                                {{ form.brand_id(class="form-select") }}
+                            </div>
+
+                            <div class="mb-3 col-12 d-flex justify-content-center">
+                                <div id="feature-image-div" class="bg-dark rounded overflow-hidden d-flex justify-content-center align-items-center">
+                                    <i class="bi bi-image text-secondary" style="transform: scale(4)"></i>
+                                </div>
+                            </div>
+
+                            <div class="mb-3 col-12">
                                 {{ form.quantity.label(class="form-label") }}
                                 {{ form.quantity(class="form-control") }}
                             </div>
                             
-                            <div class="col-6 col-lg-12">
+                            <div class="mb-5 col-12 ">
                                 <button type="submit" class="btn btn-primary">Add Product</button>
                             </div>
                         </div>
@@ -118,6 +182,86 @@
         e.children[1].classList.toggle('d-none')
         document.querySelector('.window-session').classList.toggle('window-expand')
     }
+
+    // script for additional image display and product feature image
+    
+    let carousel_indicators = document.querySelector('.carousel-indicators');
+    let carousel_inner = document.querySelector('.carousel-inner');
+    let photo_display_div = document.querySelector('.photo-display-div');
+    let photo_input = document.getElementById('additional_images');
+    let photos_count_badge = document.querySelector('.photos-count-badge');
+
+    function togglePhotoDisplayDiv() {
+        photo_display_div.classList.toggle('d-none');
+        photo_display_div.classList.toggle('d-flex');
+    }
+
+    //load image from and display in photo display div
+    photo_input.addEventListener('change', function (){
+        carousel_inner.innerHTML = null;
+        carousel_indicators.innerHTML = null;
+        let photos = this.files;
+        console.log(photos.length)
+        photos_count_badge.innerHTML = photos.length;
+        let count = 0;
+        for (const photo of photos) {
+            const reader = new FileReader();
+            reader.addEventListener('load',() => {
+                addCarouselItem(reader.result,count);
+                count = addCarouselIndicators(count);
+            })
+            reader.readAsDataURL(photo);
+        }
+        togglePhotoDisplayDiv();
+    })
+
+    function addCarouselIndicators(count) {
+
+        let button = document.createElement('button');
+        button.setAttribute('type','button');
+        button.setAttribute('data-bs-target','#carouselExampleIndicators');
+        button.setAttribute('data-bs-slide-to',count);
+        button.setAttribute('aria-label','Slide '+count);
+        if(count === 0) {
+            button.classList.add('active');
+            button.setAttribute('aria-current','true')
+        }
+        carousel_indicators.appendChild(button);
+
+        return count + 1;
+    }
+
+    function addCarouselItem(reader_result,count) {
+        let div = document.createElement('div');
+        div.classList.add('carousel-item')
+        if(count === 0) {
+            div.classList.add('active');
+        }
+
+        let img = document.createElement('img');
+        img.src = reader_result;
+        img.setAttribute('class','d-block w-100 w-100 h-100 object-fit-contain');
+        img.style.objectPosition = 'center';
+
+        div.appendChild(img)
+        carousel_inner.appendChild(div)
+    }
+
+
+    let feature_image_div = document.getElementById('feature-image-div')
+
+    document.getElementById('product_image').addEventListener('change', function() {
+        const reader = new FileReader();
+
+        reader.addEventListener('load', () => {
+            feature_image_div.innerHTML = "";
+            let img = document.createElement('img');
+            img.src = reader.result;
+            feature_image_div.appendChild(img);
+        })
+
+        reader.readAsDataURL(this.files[0])
+    })
 </script>
 
 {% endblock %}
