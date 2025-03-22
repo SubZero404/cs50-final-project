@@ -11,8 +11,388 @@
             <li class="breadcrumb-item">
                 <a href="{{ url_for('admin.productLists') }}"> Products</a>
             </li>
-            <li class="breadcrumb-item active">edit</li>
+            <li class="breadcrumb-item active">Edit</li>
         </ol>
     </nav>
 </div>
+
+
+<div class="container-fluid p-0 window-session product-section">
+    <div class="card bg-black rounded border-0 w-100 h-100 mb-4">
+        <!-- card header -->
+        <div class="card-header d-flex justify-content-between">
+            <div class="d-flex align-items-center">
+                <i class="bi bi-pencil-square fs-4"></i>
+                <span class="fw-bolder ms-2">Edit Product</span>
+            </div>
+            <div class="d-flex align-items-center">
+                <button class="btn btn-dark custom-btn me-2" onclick="toggle_window(this)">
+                    <i class="bi bi-arrows-angle-expand"></i>
+                    <i class="bi bi-arrows-angle-contract d-none"></i>
+                </button>
+                <a href="{{ url_for('admin.productLists' ) }}" class="btn btn-dark custom-btn" >
+                    <i class="bi bi-list-ul"></i>
+                </a>
+            </div>
+        </div>
+        <!-- card body -->
+         <div class="card-body">
+            <div class="container">
+                <form method="post" enctype="multipart/form-data">
+                    {{ form.hidden_tag() }}
+
+                    {% if form.errors %}
+                        <div class="alert alert-warning">
+                            <ul class="mb-0">
+                                {% for field, errors in form.errors.items() %}
+                                    {% for error in errors %}
+                                        <li><strong>{{ form[field].label }}:</strong>  {{ error }}</li>
+                                    {% endfor %}
+                                {% endfor %}
+                            </ul>
+                        </div>
+                    {% endif %}
+                
+                    <div class="row">
+                        <div class="col-12 col-lg-9">
+                            <div class="mb-3 px-4">
+                                {{ form.name.label(class="form-label") }}
+                                {{ form.name(class="form-control") }}
+                            </div>
+                    
+                            <div class="mb-3 px-4">
+                                {{ form.description.label(class="form-label") }}
+                                {{ form.description(class="form-control", rows=4) }}
+                            </div>
+
+                            <div class="d-flex">
+                                <div class="mb-3 col-6 px-4">
+                                    <p class="form-label mb-3"> Additional Images <span class="badge text-bg-danger photos-count-badge">{{ product.images|length }}</span></p>
+                                    <div class="d-flex flex-row justify-content-start align-items-center">
+                                        {{ form.additional_images(class="d-none", multiple="multiple") }}
+                                        <label for="additional_images" class="photo-label input-icon-label btn btn-outline-light me-2">
+                                            <i class="bi bi-images me-2"></i>
+                                            <span class="fw-bold"> Upload Image</span>
+                                        </label>
+                                        <button type="button" onclick="togglePhotoDisplayDiv()" class="btn btn-outline-success"><i class="bi bi-eye-fill"></i></button>
+                                    </div>
+                                </div>
+    
+                                <div class="mb-3 col-6 px-4">
+                                    <p class=" form-label mb-3"> Feature Image</p>
+                                    {{ form.product_image(class="d-none") }}
+                                    <input type="file" id="product_image" value="" class="d-none" name="feature-image" accept="image/jpeg,image/png">
+                                    <label for="product_image" class="input-icon-label btn btn-outline-light">
+                                        <i class="bi bi-laptop me-2"></i>
+                                        <span class="fw-bold">Upload Image</span>
+                                    </label>
+                                </div>
+                            </div>
+                            
+
+                            <!-- Additional Image Display Div -->
+                            <div class="photo-display-div d-none justify-content-around align-items-center">
+                                <div class="col-lg-6 col-12 bg-black rounded overflow-hidden scrollbar">
+                                    <div class="w-100 border-bottom d-flex justify-content-between align-items-center bg-dark">
+                                        <div class="d-flex flex-row align-items-center">
+                                            <i class="bi bi-images text-danger ms-4 fs-4"></i>
+                                            <h6 class="ms-1 mb-0">VIEW <span class="text-danger">PHOTOS</span></h6>
+                                        </div>
+                                        <div class="d-flex flex-row mt-1">
+                                            <button type="button" onclick="toggleDeleteOldPhotoDiv()" class="to-delete-old-photo-btn btn btn-light custom-btn btn-sm m-2">
+                                                <i class="bi bi-trash"></i> delete old
+                                            </button>
+                                            <button type="button" onclick="toggleDeleteOldPhotoDiv()" class="to-display-photo-btn btn btn-light custom-btn btn-sm m-2 d-none">
+                                                <i class="bi bi-stars"></i> done
+                                            </button>
+                                            <button type="button" class="btn btn-light custom-btn btn-sm m-2" onclick="togglePhotoDisplayDiv()">
+                                                <i class="bi bi-x" style="transform: scale(2)"></i>
+                                            </button>
+                                        </div>
+                                    </div>
+
+                                    <!-- Bootstrap Carousel -->
+                                    <div id="carouselExampleIndicators" class="carousel slide">
+                                        <div class="carousel-indicators position-absolute" style="top: 90% !important; height: 20px;">
+                                            {% for count in range(product.images|length) %}
+                                                <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="{{ count }}" aria-label="Slide {{ count }}"></button>
+                                            {% endfor %}
+                                        </div>
+                                        <div class="carousel-inner">
+                                            {% for photo in product.images %}
+                                                <div class="carousel-item position-relative {% if loop.first %} active {% endif %}" id="photo-id-{{ photo.id }}">
+                                                    <div class="d-none">
+                                                        <span class="badge text-bg-danger fs-6">
+                                                            <i class="bi bi-trash"></i>
+                                                            <i class="bi bi-check"></i>
+                                                        </span>
+                                                    </div>
+                                                    <img src="{{ url_for('static', filename='img/products/' + photo.image_url) }}" alt="{{ photo.image_url }}" class="d-block w-100">
+                                                </div>
+                                            {% endfor %}
+                                        </div>
+                                        <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
+                                            <span class="bi bi-chevron-left" aria-hidden="true" style="transform: scale(3)"></span>
+                                            <span class="visually-hidden">Previous</span>
+                                        </button>
+                                        <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
+                                            <span class="bi bi-chevron-right" aria-hidden="true" style="transform: scale(3)"></span>
+                                            <span class="visually-hidden">Next</span>
+                                        </button>
+                                    </div>
+
+                                    <!-- Delete Old Photo Section -->
+                                    <div class="delete-old-photo-div d-none bg-dark">
+                                        <h3 class="fs-6 text-center py-2">Delete Old Photos</h3>
+                                        <p class="ms-5">Select photos that you want to delete and click <span class="text-danger">done</span> button</p>
+                                        <div class="d-flex flex-wrap mx-3 justify-content-around">
+                                            {% for photo in product.images %}
+                                                <div class="delete-photo-div bg-black shadow-lg mb-5 mx-2 rounded overflow-hidden">
+                                                    <img src="{{ url_for('static', filename='img/products/' + photo.image_url) }}" alt="{{ photo.image_url }}" class="d-block w-100">
+                                                    <div class="form-check pt-1">
+                                                        <label for="photo-id-{{ photo.id }}"></label>
+                                                        <input class="form-check-input" id="photo-id-{{ photo.id }}" type="checkbox" name="delete_old_photos" value="{{ photo.id }}">
+                                                    </div>
+                                                </div>
+                                            {% endfor %}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- end of additional image display div -->
+                            
+
+                            <div class="d-flex">
+                                <div class="mb-3 col-6 px-4">
+                                    {{ form.price.label(class="form-label") }}
+                                    {{ form.price(class="form-control", type="number") }}
+                                </div>
+                        
+                                <div class="mb-3 col-6 px-4">
+                                    {{ form.previous_price.label(class="form-label") }}
+                                    {{ form.previous_price(class="form-control", type="number") }}
+                                </div>
+                            </div>
+                    
+                            <div class="mb-3 px-4">
+                                {{ form.flash_sale(class="form-check-input") }}
+                                {{ form.flash_sale.label(class="form-check-label") }}
+                            </div>
+
+                        </div>
+                        <div class="col-12 col-lg-3">
+
+                            <div class="mb-3 col-12">
+                                {{ form.category_id.label(class="form-label") }}
+                                {{ form.category_id(class="form-select") }}
+                            </div>
+
+                            <div class="mb-3 col-12">
+                                {{ form.brand_id.label(class="form-label") }}
+                                {{ form.brand_id(class="form-select") }}
+                            </div>
+
+                            <div class="mb-3 col-12 d-flex justify-content-center">
+                                <div id="feature-image-div" class="bg-dark rounded overflow-hidden d-flex justify-content-center align-items-center">
+                                    <img src="{{ url_for('static', filename='img/products/' + product.product_image) }}" alt="{{ product.product_image }}">
+                                </div>
+                            </div>
+
+                            <div class="mb-3 col-12">
+                                {{ form.quantity.label(class="form-label") }}
+                                {{ form.quantity(class="form-control") }}
+                            </div>
+                            
+                            <div class="mb-5 col-12 d-flex justify-content-between align-items-center">
+                                <button type="submit" class="btn btn-primary">Update Product</button>
+                                <form action="{{ url_for('admin.deleteProduct', product_id=product.id) }}" method="post" class="d-inline-block">
+                                    <button type="submit" class="btn btn-outline-danger custom-btn me-2" onclick="confirmDelete(event, this.form)">
+                                        <i class="bi bi-trash-fill"></i>
+                                    </button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+         </div>
+    </div>
+</div>
+
+<script>
+    function toggle_window(e) {
+        e.children[0].classList.toggle('d-none')
+        e.children[1].classList.toggle('d-none')
+        document.querySelector('.window-session').classList.toggle('window-expand')
+    }
+
+    // script for additional image display and product feature image
+    let carousel_indicators = document.querySelector('.carousel-indicators');
+    let carousel_inner = document.querySelector('.carousel-inner');
+    let photo_display_div = document.querySelector('.photo-display-div');
+    let photo_input = document.getElementById('additional_images');
+    let photo_label = document.querySelector('.photo-label')
+    let photos_count_badge = document.querySelector('.photos-count-badge');
+    let delete_old_photo_div = document.querySelector('.delete-old-photo-div');
+    let carousel_div = document.querySelector('.carousel');
+    let to_delete_old_photo_btn = document.querySelector('.to-delete-old-photo-btn');
+    let to_display_photo_btn = document.querySelector('.to-display-photo-btn');
+    let checkboxs = document.querySelectorAll('input[type="checkbox"]')
+
+    if (carousel_inner.children.length > 0) {
+        // add class->active to the first image
+        carousel_inner.firstElementChild.classList.add('active');
+
+        // add class="active" aria-current="true" to the first carousel indicator
+        first_carousel_indicator_btn = carousel_indicators.firstElementChild;
+        first_carousel_indicator_btn.classList.add('active');
+        first_carousel_indicator_btn.setAttribute('aria-current','true')
+    }
+
+    function togglePhotoDisplayDiv() {
+        photo_display_div.classList.toggle('d-none');
+        photo_display_div.classList.toggle('d-flex');
+
+    }
+
+    //load image from and display in photo display div
+    photo_input.addEventListener('change', function (){
+        let photos_count_badge = document.querySelector('.photos-count-badge');
+        let count = parseInt(photos_count_badge.textContent);
+
+        let new_carousel_indicator = document.querySelectorAll('.new-carousel-indicator');
+        new_carousel_indicator.forEach(element => {
+            element.remove();
+            count = count - 1;
+        })
+        let new_carousel_item = document.querySelectorAll('.new-carousel-item');
+        new_carousel_item.forEach(element => {
+            element.remove();
+        })
+
+        let photos = this.files;
+
+        photos_count_badge.textContent = parseInt(photos.length) + count;
+        for (const photo of photos) {
+            const reader = new FileReader();
+            reader.addEventListener('load',() => {
+                addCarouselItem(reader.result,count);
+                count = addCarouselIndicator(count);
+            })
+            reader.readAsDataURL(photo);
+        }
+        togglePhotoDisplayDiv();
+    })
+
+    photo_label.addEventListener('click', CarouselIndicatorActive)
+
+    function CarouselIndicatorActive() {
+        let count = parseInt(document.querySelector('.photos-count-badge').textContent);
+        let new_carousel_indicator = document.querySelectorAll('.new-carousel-indicator');
+        let carousel_control_next_btn = document.querySelector('.carousel-control-next');
+        let foundActive = false;
+
+        new_carousel_indicator.forEach(element => {
+            let aria_label = element.getAttribute('aria-label');
+            let indicator_number = parseInt(aria_label.split(' ')[1]);
+            if(indicator_number === 0) {
+                foundActive = true;
+            }
+            if (element.classList.contains('active') && !foundActive) {
+                let different = count - indicator_number;
+
+                if (different > 0) {
+                    for (let i = 0; i < different; i++) {
+                        setTimeout(function() {
+                            carousel_control_next_btn.click();
+                        }, i * 1000); // Delay each click by 500ms
+                    }
+                }
+
+                foundActive = true;
+            }
+        });
+    }
+
+    function addCarouselIndicator(count) {
+
+        let button = document.createElement('button');
+        button.setAttribute('type','button');
+        button.setAttribute('data-bs-target','#carouselExampleIndicators');
+        button.setAttribute('data-bs-slide-to',count);
+        button.setAttribute('aria-label','Slide '+count);
+        button.classList.add('new-carousel-indicator')
+        if(count === 0) {
+            button.classList.add('active');
+            button.setAttribute('aria-current','true')
+        }
+        carousel_indicators.appendChild(button);
+
+        return count + 1;
+    }
+
+    function addCarouselItem(reader_result,count) {
+        let div = document.createElement('div');
+        div.classList.add('carousel-item');
+        div.classList.add('new-carousel-item');
+        if(count === 0) {
+            div.classList.add('active');
+        }
+
+        let img = document.createElement('img');
+        img.src = reader_result;
+
+        let inner_div = document.createElement('div');
+        let span = document.createElement('span');
+        span.setAttribute('class','badge text-bg-danger fs-6 fw-light pt-0 my-2')
+        span.innerText = 'new';
+
+        inner_div.appendChild(span);
+        div.appendChild(inner_div);
+        div.appendChild(img)
+        carousel_inner.appendChild(div)
+    }
+
+    // toggle delete old photo div
+    function toggleDeleteOldPhotoDiv() {
+        delete_old_photo_div.classList.toggle('d-none');
+        carousel_div.classList.toggle('d-none');
+        to_delete_old_photo_btn.classList.toggle('d-none');
+        to_display_photo_btn.classList.toggle('d-none');
+    }
+
+    checkboxs.forEach(checkbox => {
+        checkbox.addEventListener('change', function () {
+            let photo_id = checkbox.value;
+            let checked_photo = document.getElementById('photo-id-'+photo_id)
+            if(checkbox.checked) {
+                checked_photo.firstElementChild.classList.remove('d-none')
+                console.log(photo_id+'is checked')
+                photos_count_badge.textContent = parseInt(photos_count_badge.textContent) - 1;
+            } else {
+                checked_photo.firstElementChild.classList.add('d-none')
+                console.log(photo_id+'is unchecked')
+                photos_count_badge.textContent = parseInt(photos_count_badge.textContent) + 1;
+            }
+        })
+    })
+
+
+    let feature_image_div = document.getElementById('feature-image-div')
+
+    document.getElementById('product_image').addEventListener('change', function() {
+        const reader = new FileReader();
+
+        reader.addEventListener('load', () => {
+            feature_image_div.innerHTML = "";
+            let img = document.createElement('img');
+            img.src = reader.result;
+            feature_image_div.appendChild(img);
+        })
+
+        reader.readAsDataURL(this.files[0])
+    })
+    
+</script>
+
 {% endblock %}

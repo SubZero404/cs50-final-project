@@ -42,6 +42,7 @@ def upgrade():
     op.bulk_insert(
         brand_table,
         [
+            {"name": "Unknow", "slug": "unknow", "created_at": now, "updated_at": now},
             {"name": "Apple", "slug": "apple", "created_at": now, "updated_at": now},
             {"name": "Samsung", "slug": "samsung", "created_at": now, "updated_at": now},
             {"name": "Sony", "slug": "sony", "created_at": now, "updated_at": now},
@@ -52,6 +53,7 @@ def upgrade():
             {"name": "Lenovo", "slug": "lenovo", "created_at": now, "updated_at": now},
             {"name": "Microsoft", "slug": "microsoft", "created_at": now, "updated_at": now},
             {"name": "Google", "slug": "google", "created_at": now, "updated_at": now},
+            {"name": "Nike", "slug": "nike", "created_at": now, "updated_at": now},
         ]
     )
 
@@ -59,6 +61,7 @@ def upgrade():
     op.bulk_insert(
         category_table,
         [
+            {"name": "No Category", "slug": "no-category", "created_at": now, "updated_at": now},
             {"name": "Laptops", "slug": "laptops", "created_at": now, "updated_at": now},
             {"name": "Smartphones", "slug": "smartphones", "created_at": now, "updated_at": now},
             {"name": "Tablets", "slug": "tablets", "created_at": now, "updated_at": now},
@@ -69,6 +72,7 @@ def upgrade():
             {"name": "Smartwatches", "slug": "smartwatches", "created_at": now, "updated_at": now},
             {"name": "Accessories", "slug": "accessories", "created_at": now, "updated_at": now},
             {"name": "Gaming", "slug": "gaming", "created_at": now, "updated_at": now},
+            {"name": "Snecker", "slug": "snecker", "created_at": now, "updated_at": now},
         ]
     )
 

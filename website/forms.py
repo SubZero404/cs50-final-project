@@ -39,7 +39,7 @@ class ProductForm(FlaskForm):
     category_id = SelectField('Category', coerce=int, validators=[DataRequired()])
     brand_id = SelectField('Brand', coerce=int, validators=[DataRequired()])
     quantity = IntegerField('Quantity', validators=[DataRequired(), NumberRange(min=0)])
-    product_image = FileField('Product Image', validators=[DataRequired(), FileAllowed(['jpg', 'png', 'jpeg'])])
+    product_image = FileField('Product Image', validators=[FileAllowed(['jpg', 'png', 'jpeg'])])
     flash_sale = BooleanField('Flash Sale')
     additional_images = MultipleFileField('Additional Images', render_kw={"multiple": True}, validators=[FileAllowed(['jpg', 'png', 'jpeg'])])
     submit = SubmitField('submit')
