@@ -1,11 +1,12 @@
 from flask import Blueprint, render_template, flash, redirect, url_for, request
-from flask_login import login_required
+from flask_login import login_required, current_user
 from .forms import CategoryForm, ProductForm, BrandForm
 from .models import Category, Product, Image, Brand
 from slugify import slugify
 from werkzeug.utils import secure_filename
 from wtforms.validators import DataRequired
 from flask_wtf.file import FileAllowed
+from functools import wraps
 import random
 import os
 from . import db
@@ -19,12 +20,25 @@ path = 'admin/'
 def dashboard():
     return render_template(path + 'dashboard.html')
 
+# Replace 'ADMIN_USER_ID' with the specific user ID allowed to access these routes
+ADMIN_USER_ID = 1  # Change this to the actual admin user ID
+
+def admin_required(f):
+    @wraps(f)
+    def decorated_function(*args, **kwargs):
+        if not current_user.is_authenticated or current_user.id != ADMIN_USER_ID:
+            flash("You do not have permission to access this page.", "warning")
+            return redirect(url_for("views.index"))  # Redirect to home page or login
+        return f(*args, **kwargs)
+    return decorated_function
+
 
 
 
 # product management--------------------------------
 @admin.route('/product_lists')
 @login_required
+@admin_required
 def productLists():
     products = Product.query.order_by(Product.created_at.desc()).all()
     return render_template(path + 'productLists.html', products=products)
@@ -32,6 +46,7 @@ def productLists():
 
 @admin.route('/add-product', methods=['GET', 'POST'])
 @login_required
+@admin_required
 def addProduct():
     form = ProductForm()
     form.category_id.choices = [(c.id, c.name) for c in Category.query.all()]
@@ -82,13 +97,14 @@ def addProduct():
 
         flash('Product added successfully', 'success')
         
-        return redirect(url_for('admin.productLists'))
+        return redirect(url_for('admin.showProduct', product_id=new_product.id))
     
     return render_template(path + 'addProduct.html', form=form)
 
 
 @admin.route('/edit-product/<int:product_id>', methods=['GET', 'POST'])
 @login_required
+@admin_required
 def editProduct(product_id):
     product = Product.query.get_or_404(product_id)
     form = ProductForm(obj=product)
@@ -162,13 +178,14 @@ def editProduct(product_id):
 
         flash('Product Update successfully', 'success')
         
-        return redirect(url_for('admin.productLists'))
+        return redirect(url_for('admin.showProduct', product_id=product.id))
     
     return render_template(path + 'editProduct.html', form=form, product=product)
 
 
 @admin.route('/delete-product/<int:product_id>', methods=['GET', 'POST'])
 @login_required
+@admin_required
 def deleteProduct(product_id):
     product = Product.query.get(product_id)
     if not product:
@@ -192,6 +209,12 @@ def deleteProduct(product_id):
         flash('Product deleted successfully', 'success')
     return redirect(url_for('admin.productLists'))
 
+@admin.route('/show-product/<int:product_id>', methods=['GET', 'POST'])
+@login_required
+@admin_required
+def showProduct(product_id):
+    product = Product.query.get(product_id)
+    return render_template(path + 'showProduct.html', product=product)
 
 def generate_unique_filename(filename, type='notype'):
     secure_name = secure_filename(filename)
@@ -205,6 +228,7 @@ def generate_unique_filename(filename, type='notype'):
 # category management--------------------------------
 @admin.route('/categories', methods=['GET', 'POST'])
 @login_required
+@admin_required
 def manageCategory():
     form = CategoryForm()
     categories = Category.query.order_by(Category.created_at.desc()).all()
@@ -237,6 +261,7 @@ def manageCategory():
 
 @admin.route('/delete_category/<int:category_id>', methods=['GET', 'POST'])
 @login_required
+@admin_required
 def deleteCategory(category_id):
     category = Category.query.filter_by(id=category_id).first()
     if category:
@@ -253,6 +278,7 @@ def deleteCategory(category_id):
 # brand management--------------------------------
 @admin.route('/brands', methods=['GET', 'POST'])
 @login_required
+@admin_required
 def manageBrand():
     form = BrandForm()
     brands = Brand.query.order_by(Brand.created_at.desc()).all()
@@ -285,6 +311,7 @@ def manageBrand():
 
 @admin.route('/delete_brand/<int:brand_id>', methods=['GET', 'POST'])
 @login_required
+@admin_required
 def deleteBrand(brand_id):
     brand = Brand.query.filter_by(id=brand_id).first()
     if brand:

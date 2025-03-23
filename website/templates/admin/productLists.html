@@ -67,7 +67,7 @@
                         </td>
                         <td class="text-nowrap text-center">
 
-                            <a href="#" class="btn btn-outline-light custom-btn me-2 mb-2">
+                            <a href="{{ url_for('admin.showProduct', product_id=product.id) }}" class="btn btn-outline-light custom-btn me-2 mb-2">
                                 <i class="bi bi-layout-text-window-reverse text-success"></i>
                             </a>
 
@@ -99,10 +99,6 @@
 </div>
 
 <script>
-    function toggle_search() {
-        document.querySelector('.search-form').classList.toggle('d-none')
-    }
-
     function toggle_window(e) {
         e.children[0].classList.toggle('d-none')
         e.children[1].classList.toggle('d-none')

@@ -1,0 +1,126 @@
+{% extends 'admin/components/layout.html' %}
+
+{% block body %}
+<div class="m-3">
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item">
+                <i class="bi bi-house"></i>
+                <a href="{{ url_for('admin.dashboard' ) }}"> Dashboard</a>
+            </li>
+            <li class="breadcrumb-item">
+                <a href="{{ url_for('admin.productLists') }}"> Products</a>
+            </li>
+            <li class="breadcrumb-item active">Detail</li>
+        </ol>
+    </nav>
+</div>
+
+<div class="container-fluid p-0 product-section window-session bg-black rounded">
+    <div class="card bg-black border-0 mb-3">   
+        <div class="card-header d-flex justify-content-between mx-2">
+            <div class="d-flex align-items-center">
+                <i class="bi bi-boxes fs-4"></i>
+                <span class="fw-bolder ms-2">Products</span>
+            </div>
+            <div class="d-flex align-items-center">
+                <a href="{{ url_for('admin.editProduct', product_id=product.id) }}" class="btn btn-dark custom-btn me-2">
+                    <i class="bi bi-pencil"></i>
+                </a>
+
+                <button class="btn btn-dark custom-btn me-2" onclick="toggle_window(this)">
+                    <i class="bi bi-arrows-angle-expand"></i>
+                    <i class="bi bi-arrows-angle-contract d-none"></i>
+                </button>
+                
+                <a href="{{ url_for('admin.productLists' ) }}" class="btn btn-dark custom-btn" >
+                    <i class="bi bi-list-ul"></i>
+                </a>
+            </div>
+        </div>
+        <div class="card-body" style="min-height: 65vh;">
+            <div class="container row">
+                <div class="col-8">
+                    <div class="mb-5">
+                        <h5 class="fs-6 text-secondary">Product Name</h5>
+                        <h5 class="card-title">{{ product.name }}</h5>
+                    </div>
+
+                    <div class="mb-5">
+                        <h5 class="fs-6 text-secondary">Product description</h5>
+                        <p class="card-text"> {{ product.description | safe }}</p>
+                    </div>
+
+                    <div class="mb-5">
+                        <h5 class="fs-6 text-secondary">Product Additional Images</h5>
+                        <div class="row mb-3">
+                            {% for image in product.images %}
+                            <div class="col-md-4 mt-3">
+                                <img src="{{ url_for('static', filename='img/products/' + image.image_url) }}" class="img-fluid" alt="Additional Image">
+                            </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+        
+                <div class="col-4">
+                    <div class="mb-5">
+                        <h5 class="fs-6 text-secondary mb-3">Product Images</h5>
+                        <div class="col-8 m-auto mb-5 rounded rounded-1 overflow-hidden">
+                            <img src="{{ url_for('static', filename='img/products/' + product.product_image) }}" class="img-fluid" alt="Product Image">
+                        </div>
+                    </div>
+
+                    <table class="custom-table">
+                        <tbody>
+                            <tr>
+                                <th>Price:</th>
+                                <td>${{ product.price }}</td>
+                            </tr>
+                            <tr>
+                                <th>Previous Price:</th>
+                                <td>${{ product.previous_price }}</td>
+                            </tr>
+                            <tr>
+                                <th>Category:</th>
+                                <td>{{ product.category_link.name }}</td>
+                            </tr>
+                            <tr>
+                                <th>Brand:</th>
+                                <td>{{ product.brand_link.name }}</td>
+                            </tr>
+                            <tr>
+                                <th>Quantity:</th>
+                                <td>{{ product.quantity }}</td>
+                            </tr>
+                            <tr>
+                                <th>Flash Sale:</th>
+                                <td>{% if product.flash_sale %} Yes {% else %} No {% endif %}</td>
+                            </tr>
+                            <tr>
+                                <th>Created At:</th>
+                                <td>{{ product.created_at }}</td>
+                            </tr>
+                            <tr>
+                                <th>Updated At:</th>
+                                <td>{{ product.updated_at }}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <a href="{{ url_for('admin.productLists') }}" class="btn btn-outline-primary">Back to Product List</a>
+                </div>
+            </div>
+        </div>
+        
+    </div>
+</div>
+
+<script>
+    function toggle_window(e) {
+        e.children[0].classList.toggle('d-none')
+        e.children[1].classList.toggle('d-none')
+        document.querySelector('.window-session').classList.toggle('window-expand')
+    }
+</script>
+{% endblock %}
+

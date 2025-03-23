@@ -35,3 +35,11 @@ function confirmDelete(event, form) {
         }
     });
 }
+
+// summer note for description
+$(document).ready(function() {
+    $('#description').summernote({
+        height: 200,  // Set the height of the editor
+        placeholder: 'Write your product description here...',  // Placeholder text
+    });
+});

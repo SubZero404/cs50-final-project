@@ -67,3 +67,7 @@ Flask-Migrate
 # npm install sweetalert2
 
 # npm install @glidejs/glide
+
+# npm install summernote --save
+
+# npm install jquery --save

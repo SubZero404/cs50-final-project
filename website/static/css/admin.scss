@@ -156,4 +156,28 @@
             object-fit: cover;
         }
     }
+
+    .custom-table {
+        padding: 10px;
+        width: 100%;
+        border-collapse: collapse;
+        margin: 20px 0;
+        th,
+        td {
+            padding: 10px;
+            text-align: left;
+            border: none; // Remove borders
+            background-color: transparent; // Make background transparent
+        }
+    
+        th {
+            font-weight: bold;
+        }
+    
+        td:first-child {
+            width: 150px; // Fixed width for the first column
+        }
+    }
+    
+    
 }
