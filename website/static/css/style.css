@@ -4,6 +4,10 @@
   padding: 0;
 }
 
+.scrollbar-width-0::-webkit-scrollbar {
+  width: 0;
+}
+
 .loginAndRegister-div .img-lg-div {
   width: 90%;
   height: 400px;
@@ -188,10 +192,57 @@
   min-width: 110px;
 }
 
-.product-section {
-  box-shadow: 0px -29px 50px -19px rgba(0, 0, 0, 0.27);
-  -webkit-box-shadow: 0px -29px 50px -19px rgba(0, 0, 0, 0.27);
-  -moz-box-shadow: 0px -29px 50px -19px rgba(0, 0, 0, 0.27);
+.new-arrival-section .left-div,
+.new-arrival-section .right-div {
+  height: 600px;
+}
+.new-arrival-section .right-div .top-div,
+.new-arrival-section .right-div .bottom-div {
+  height: 300px;
+}
+.new-arrival-section .gif-div {
+  position: relative;
+  overflow: hidden;
+}
+.new-arrival-section .gif-div img {
+  width: 100%;
+  height: 100%;
+  -o-object-fit: cover;
+     object-fit: cover;
+  -o-object-position: center;
+     object-position: center;
+}
+.new-arrival-section .gif-div .view-link {
+  position: absolute;
+  width: 100%;
+  bottom: -50%;
+  left: 50%;
+  transform: translateX(-50%);
+  padding: 20px;
+  display: flex;
+  justify-content: center;
+  background: rgba(0, 0, 0, 0.966);
+  background: linear-gradient(0deg, rgb(0, 0, 0) 0%, rgba(0, 0, 0, 0.5088410364) 50%, rgba(0, 0, 0, 0) 100%);
+}
+.new-arrival-section .gif-div .view-link a {
+  transform: scale(1.5);
+}
+.new-arrival-section .gif-div .view-link a:hover {
+  transition: all 0.5s ease;
+  transform: scale(1.55);
+  color: white !important;
+}
+.new-arrival-section .gif-div:hover .view-link {
+  bottom: 0;
+  transition: all 0.5s ease;
+}
+
+.product-section .product-card {
+  overflow: hidden;
+  transition: all ease 0.5s;
+}
+.product-section .product-card:hover {
+  transform: scale(1.1);
 }
 .product-section .view-all-link {
   transition: all 0.3s ease;
@@ -218,65 +269,32 @@
   border: none;
 }
 
-.new-arrival-section .left-div,
-.new-arrival-section .right-div {
-  height: 600px;
+.flash-sale-section {
+  box-shadow: 0px -29px 50px -19px rgba(0, 0, 0, 0.27);
+  -webkit-box-shadow: 0px -29px 50px -19px rgba(0, 0, 0, 0.27);
+  -moz-box-shadow: 0px -29px 50px -19px rgba(0, 0, 0, 0.27);
 }
-.new-arrival-section .right-div .top-div,
-.new-arrival-section .right-div .bottom-div {
-  height: 300px;
-}
-.new-arrival-section .gif-div {
-  position: relative;
+.flash-sale-section .product-card {
   overflow: hidden;
+  transition: all ease 0.5s;
 }
-.new-arrival-section .gif-div img {
-  width: 100%;
-  height: 100%;
-  -o-object-fit: cover;
-     object-fit: cover;
-  -o-object-position: center;
-     object-position: center;
+.flash-sale-section .product-card:hover {
+  transform: scale(1.1);
 }
-.new-arrival-section .gif-div .gif-link {
-  position: absolute;
-  width: 100%;
-  bottom: -50%;
-  left: 50%;
-  transform: translateX(-50%);
-  padding: 20px;
-  display: flex;
-  justify-content: center;
-  background: rgb(0, 0, 0);
-  background: linear-gradient(0deg, rgb(0, 0, 0) 0%, rgba(0, 0, 0, 0.5088410364) 50%, rgba(0, 0, 0, 0) 100%);
-}
-.new-arrival-section .gif-div .gif-link a {
-  transform: scale(1.5);
-}
-.new-arrival-section .gif-div .gif-link a:hover {
-  transition: all 0.5s ease;
-  transform: scale(1.55);
-  color: white !important;
-}
-.new-arrival-section .gif-div:hover .gif-link {
-  bottom: 0;
-  transition: all 0.5s ease;
-}
-
-.new-product-section .view-all-link {
+.flash-sale-section .view-all-link {
   transition: all 0.3s ease;
   color: #1a88ff;
 }
-.new-product-section .view-all-link:hover {
+.flash-sale-section .view-all-link:hover {
   color: #007bff;
   transform: scale(1.05);
 }
-.new-product-section .card {
+.flash-sale-section .card {
   height: 17rem;
   border-radius: 0;
   overflow: hidden;
 }
-.new-product-section .card .card-body img {
+.flash-sale-section .card .card-body img {
   width: 100%;
   height: 100%;
   -o-object-fit: cover;
@@ -284,7 +302,7 @@
   -o-object-position: center;
      object-position: center;
 }
-.new-product-section .card .card-footer {
+.flash-sale-section .card .card-footer {
   border: none;
 }
 
@@ -594,8 +612,10 @@ footer .copyright {
 }
 .product-detail .detail-div .product-img .img-display {
   overflow: hidden;
+  height: 70vh;
 }
 .product-detail .detail-div .product-img .img-display .img-showcase {
+  height: 100%;
   width: 100%;
   display: flex;
   transition: all 0.5s ease;
@@ -707,4 +727,21 @@ footer .copyright {
   .change-password-section .contact-form button {
     font-size: 16px;
   }
+}
+
+.cart-section {
+  min-height: 70vh;
+}
+.cart-section .cart-div {
+  width: 75px;
+  height: 75px;
+  overflow: hidden;
+}
+.cart-section .cart-div img {
+  width: 100%;
+  height: 100%;
+  -o-object-fit: cover;
+     object-fit: cover;
+  -o-object-position: center;
+     object-position: center;
 }/*# sourceMappingURL=style.css.map */

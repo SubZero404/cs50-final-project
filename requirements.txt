@@ -40,12 +40,17 @@ Flask-Migrate
 # flask db migrate -m "Initial migration"
 # flask db upgrade
 
+#___________ remove migration ________
+# Remove-Item -Recurse -Force migrations
+
 # _________ create migration __________
 # flask db migrate -m "Add brands and categories" or flask db revision -m "Insert brands and categories"
 # flask db upgrade
 
 
 
+# __________seeding ________
+# python -m website.seed
 
 
 

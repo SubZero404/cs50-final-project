@@ -47,11 +47,6 @@
                     </div>
 
                     <div class="mb-5">
-                        <h5 class="fs-6 text-secondary">Product description</h5>
-                        <p class="card-text"> {{ product.description | safe }}</p>
-                    </div>
-
-                    <div class="mb-5">
                         <h5 class="fs-6 text-secondary">Product Additional Images</h5>
                         <div class="row mb-3">
                             {% for image in product.images %}
@@ -60,6 +55,11 @@
                             </div>
                             {% endfor %}
                         </div>
+                    </div>
+
+                    <div class="mb-5">
+                        <h5 class="fs-6 text-secondary">Product description</h5>
+                        <p class="card-text"> {{ product.description | safe }}</p>
                     </div>
                 </div>
         

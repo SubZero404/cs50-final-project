@@ -1,0 +1,42 @@
+<div class="accordion shadow border rounded overflow-y-scroll scrollbar-width-0 my-2" id="accordionExample" style="height: 300px;">
+    <div class="accordion-item">
+        <h2 class="accordion-header">
+            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
+                Category
+            </button>
+        </h2>
+        <div id="collapseOne" class="accordion-collapse collapse" data-bs-parent="#accordionExample">
+            <div class="accordion-body">    
+                <ul class="list-group text-center">
+                    {% for category in categories %}
+                        {% if not loop.first %}
+                            <li class="list-group-item">
+                                <a href="{{ url_for('views.category', slug=category.slug) }}" class="text-decoration-none d-block text-dark">{{ category.name }}</a>
+                            </li>
+                        {% endif %}
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="accordion-item">
+        <h2 class="accordion-header">
+            <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo">
+                Brand
+            </button>
+        </h2>
+        <div id="collapseTwo" class="accordion-collapse collapse show" data-bs-parent="#accordionExample">
+            <div class="accordion-body">
+                <ul class="list-group text-center">
+                    {% for brand in brands %}
+                        {% if not loop.first %}
+                            <li class="list-group-item">
+                                <a href="{{ url_for('views.brand', slug=brand.slug) }}" class="text-decoration-none d-block text-dark">{{ brand.name }}</a>
+                            </li>
+                        {% endif %}
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>

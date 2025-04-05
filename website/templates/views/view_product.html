@@ -1,0 +1,178 @@
+{% extends 'views/components/view_layout.html' %}
+
+{% block main %}
+
+{% include "views/components/flash_alert.html" %}
+
+<div class="container mt-2">
+    <nav style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item"><a href="{{ url_for('views.index' ) }}">Home</a></li>
+          <li class="breadcrumb-item active" aria-current="page">View Product</li>
+        </ol>
+    </nav>
+</div>
+
+<section class="product-detail container">
+    <div class="row h-100 detail-div">
+        <!-- Product Images --> 
+        <div class="col-12 col-lg-6">
+            <div class="product-img py-3 mt-4">
+                <div class="img-display">
+                    <div class="img-showcase shadow">
+                        <img src="{{ url_for('static', filename='img/products/' + product.product_image) }}" alt="product.product_image">
+                        {% for image in images %}
+                        <img src="{{ url_for('static', filename='img/products/' + image.image_url) }}" alt="image.image_url">
+                        {% endfor %}
+                    </div>
+                </div>
+                <div class="img-select d-flex">
+                    <div class="img-item col-3 shadow ps-0">
+                        <a href="#" data-id="1">
+                            <img src="{{ url_for('static', filename='img/products/' + product.product_image) }}" alt="product.product_image">
+                        </a>
+                    </div>
+                    {% for image in images %}
+                        <div class="img-item col-3 shadow ps-0">
+                            <a href="#" data-id="{{ loop.index + 1 }}">
+                                <img src="{{ url_for('static', filename='img/products/' + image.image_url) }}" alt="image.image_url">
+                            </a>
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+
+        <!-- Product Details -->
+        <div class="col-12 col-lg-6">
+            <form action="#" method="post" class="h-100">
+                <div class="d-flex flex-column h-100 py-5 px-2">
+                    <div class="">
+                        <h2 class="fs-3 text-primary ms-2 mb-3">{{ product.name }}</h2>
+
+                        <div class="col-12 col-md-8 col-lg-6">
+                            <table class="table table-borderless fw-bold">
+                                <tr>
+                                    <td>Old Price:</td>
+                                    <td class="text-secondary text-decoration-line-through">{{ product.previous_price }}</td>
+                                </tr>
+                                <tr>
+                                    <td>New Price:</td>
+                                    <td class="text-danger">{{ product.price }}</td>
+                                </tr>
+                                <tr>
+                                    <td>Category:</td>
+                                    <td class="text-danger">{{ product.category_link.name }}</td>
+                                </tr>
+                                <tr>
+                                    <td>Brand:</td>
+                                    <td class="text-danger">{{ product.brand_link.name }}</td>
+                                </tr>
+                            </table>
+                        </div>
+                        
+                        <!-- Review Stars -->
+                        
+
+                        <!-- <div class="mb-2">
+                            <span class="text-warning">
+                                <i class="bi bi-star-fill"></i>
+                                <i class="bi bi-star-fill"></i>
+                                <i class="bi bi-star-fill"></i>
+                                <i class="bi bi-star-half"></i>
+                                <i class="bi bi-star"></i>
+                            </span>
+                            <span class="text-muted">(4.5/5)</span>
+                        </div> -->
+                    </div>
+
+
+                    <div class="d-flex justify-content-between  align-items-center">
+                        <div class="quantity-input mt-3 d-flex">
+                            <input type="text" id="quantity" class="form-control fw-bold me-2 w-25" value="1" readonly>
+                            <button type="button" class="btn btn-outline-dark fw-bold mx-2" style="width: 50px;" onclick="changeQuantity(-1)">-</button>
+                            <button type="button" class="btn btn-outline-dark fw-bold" style="width: 50px;" onclick="changeQuantity(1)">+</button>
+                        </div>
+                        <button type="button" class="btn btn-primary mt-3" id="addToCartBtn" data-product-id="{{ product.id }}">
+                            Add to Cart
+                        </button>
+                    </div>
+                    <div class="">
+                        <a href="#" class="text-primary me-2"><i class="bi bi-facebook" style="font-size: 1.5rem;"></i></a>
+                        <a href="#" class="text-danger me-2"><i class="bi bi-instagram" style="font-size: 1.5rem;"></i></a>
+                        <a href="#" class="text-dark"><i class="bi bi-tiktok" style="font-size: 1.5rem;"></i></a>
+                    </div>
+
+                    <div class="d-none d-lg-block"></div>
+
+                    <div class="mt-5">
+                        <h3 class="fs-5">description</h3>
+                        {{ product.description | safe }}                   
+                    </div>
+
+                </div>
+            </form>
+        </div>
+    </div>
+</section>
+
+{% include 'views/components/cart_button.html' %}
+
+<script>
+    const imgs = document.querySelectorAll(".img-select a");
+    const img_btns = [... imgs];
+    let img_id = 1;
+    img_btns.forEach(img_item => {
+        img_item.addEventListener("click", event => {
+            event.preventDefault();
+            img_id = img_item.dataset.id;
+            slideImage();
+        })
+    })
+
+    function slideImage() {
+        const display_width = document.querySelector('.img-showcase img:first-child').clientWidth;
+
+        document.querySelector('.img-showcase').style.transform = `translateX(${ - (img_id - 1) * display_width }px)`;
+    }
+
+    function changeImage(thumbnail) {
+        document.getElementById('mainImage').src = thumbnail.src;
+    }
+
+    function changeQuantity(amount) {
+        let quantityInput = document.getElementById('quantity');
+        let currentValue = parseInt(quantityInput.value);
+        let newValue = currentValue + amount;
+        if (newValue < 1) newValue = 1;
+        quantityInput.value = newValue;
+    }
+
+    document.getElementById("addToCartBtn").addEventListener("click", function() {
+        let productId = this.dataset.productId;
+        let quantity = document.getElementById("quantity").value; // Get quantity from input
+
+        fetch(`/add-to-cart/${productId}`, {
+            method: "POST",
+            body: new URLSearchParams({ "quantity": quantity }), // Send quantity to backend
+            headers: {
+                "Content-Type": "application/x-www-form-urlencoded",
+            }
+        })
+        .then(response => response.json())
+        .then(data => {
+            location.reload();
+        })
+        .catch(error => {
+            Swal.fire({
+                position: "botton-end",
+                icon: 'warning',
+                title: "failed to add cart item",
+                showConfirmButton: false,
+                timer: 750
+            });
+        });
+    });
+</script>
+
+{% endblock %}

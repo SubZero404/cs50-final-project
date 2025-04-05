@@ -26,8 +26,8 @@ class User(UserMixin, db.Model):
     created_at = db.Column(db.DateTime, default=db.func.now())
     updated_at = db.Column(db.DateTime, default=db.func.now(), onupdate=db.func.now())
 
-    cart_items = db.relationship('Cart', backref='user', lazy=True) 
-    orders = db.relationship('Order', backref='user', lazy=True)
+    cart_items = db.relationship('Cart', backref=db.backref('user', lazy=True)) 
+    orders = db.relationship('Order', backref=db.backref('user', lazy=True))
 
     @property
     def password(self):
@@ -84,6 +84,7 @@ class Product(db.Model):
     reviews = db.relationship('Review', backref='product', lazy=True)
     order_link = db.relationship('OrderItem', backref='product', lazy=True)
     images = db.relationship('Image', backref='product', lazy=True, cascade='all, delete-orphan')
+    carts = db.relationship('Cart', backref=db.backref('product', lazy=True))
 
     def __repr__(self):
         return '<Product {}>'.format(self.name)
@@ -106,6 +107,7 @@ class Cart(db.Model):
     quantity = db.Column(db.Integer, nullable=False)
     created_at = db.Column(db.DateTime, default=db.func.now())
     updated_at = db.Column(db.DateTime, default=db.func.now(), onupdate=db.func.now())
+
 
     def __repr__(self):
         return '<Cart {}>'.format(self.id)

@@ -4,16 +4,25 @@
     
     {% include "views/components/flash_alert.html" %}
 
-    {% include "views/index/glide.html" %}
+    <section class="container row mx-auto">
+        <div class="col-12 col-md-4 col-lg-3">
+            {% include "views/index/categories_and_brands.html" %}
+        </div>
+        <div class="col-12 col-md-8 col-lg-9">
+            {% include "views/index/glide.html" %}
+        </div>
+    </section>
+
+    {% include 'views/index/product_section.html' %}
 
     {% include "views/index/categories.html" %}
 
-    {% include 'views/index/product_section.html'   %}
+    {% include 'views/index/new_items_img.html' %}
 
-    {% include 'views/index/new_items_img.html'   %}
-
-    {% include 'views/index/new_product_section.html'   %}
+    {% include 'views/index/flash_sale_section.html' %}
 
     {% include "views/index/subscribe.html" %}
+
+    {% include 'views/components/cart_button.html' %}
 
 {% endblock %}

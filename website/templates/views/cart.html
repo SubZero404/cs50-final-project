@@ -1,0 +1,162 @@
+{% extends 'views/components/view_layout.html' %}
+
+{% block main %}
+
+{% include "views/components/flash_alert.html" %}
+
+<div class="container mt-2">
+    <nav style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{{ url_for('views.index' ) }}">Home</a></li>
+            <li class="breadcrumb-item active" aria-current="page">View Product</li>
+        </ol>
+    </nav>
+</div>
+
+<div class="container mt-4 cart-section">
+    <h2 class="text-primary fs-5 ms-1">Your Cart</h2>
+
+    <div class="row">
+        {% if cart_items %}
+            <div class="table-responsive">
+                <table class="table table-borderless">
+                    <thead class="d-none d-md-table-header-group">
+                        <tr>
+                            <th>Product</th>
+                            <th>Price</th>
+                            <th>Quantity</th>
+                            <th>Total</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for item in cart_items %}
+                            <tr class="d-none d-md-table-row">
+                                <!-- Desktop view -->
+                                <td class="d-flex align-items-center">
+                                    <img src="{{ url_for('static', filename='img/products/' + item.product.product_image) }}" class="me-2" style="width: 50px; height: 50px; object-fit: cover;">
+                                    {{ item.product.name }}
+                                </td>
+                                <td>${{ item.product.price | round(2) }}</td>
+                                <td style="width: 200px;">
+                                    <div class="d-flex align-items-center">
+                                        <input type="number" class="form-control fw-bold me-2" value="{{ item.quantity }}" min="1" data-item-id="{{ item.id }}">
+                                        <button class="btn btn-outline-dark fw-bold me-1" style="min-width: 38px; min-height: 38px;" onclick="changeQuantity(this, -1)">-</button>
+                                        <button class="btn btn-outline-dark fw-bold" style="min-width: 38px; min-height: 38px;" onclick="changeQuantity(this, 1)">+</button>
+                                    </div>
+                                </td>
+                                <td>${{ (item.product.price * item.quantity) | round(2) }}</td>
+                                <td><button class="btn btn-danger remove-item" data-item-id="{{ item.id }}"><i class="bi bi-trash"></i></button></td>
+                            </tr>
+                
+                            <!-- Mobile card view -->
+                            <tr class="d-md-none">
+                                <td colspan="5">
+                                    <div class="card mb-3 p-2 shadow-sm px-4 py-2">
+                                        <div class="d-flex align-items-center">
+                                            <img src="{{ url_for('static', filename='img/products/' + item.product.product_image) }}" class="me-3 rounded" style="width: 60px; height: 60px; object-fit: cover;">
+                                            <div>
+                                                <p class="mb-1 fw-bold">{{ item.product.name }}</p>
+                                                <p class="mb-1">Price: ${{ item.product.price | round(2) }}</p>
+                                                <p class="mb-1">Total: ${{ (item.product.price * item.quantity) | round(2) }}</p>
+                                            </div>
+                                        </div>
+                                        <div class="mt-2 d-flex align-items-center">
+                                            <input type="number" class="form-control fw-bold me-2" style="max-width: 100px;" value="{{ item.quantity }}" min="1" data-item-id="{{ item.id }}">
+                                            <button class="btn btn-outline-dark fw-bold me-1" style="min-width: 38px; min-height: 38px;" onclick="changeQuantity(this, -1)">-</button>
+                                            <button class="btn btn-outline-dark fw-bold me-2" style="min-width: 38px; min-height: 38px;" onclick="changeQuantity(this, 1)">+</button>
+                                            <button class="btn btn-danger remove-item ms-auto" data-item-id="{{ item.id }}"><i class="bi bi-trash"></i></button>
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>                
+            </div>
+
+            <div class="d-flex justify-content-between flex-column flex-md-row my-3">
+                <h3 class="fs-5">Total: ${{ total_price | round(2) }}</h3>
+                <a href="{{ url_for('views.cart') }}" class="btn btn-primary mt-2 mt-md-0">Proceed to Checkout</a>
+            </div>
+        {% else %}
+            <p>Your cart is empty!</p>
+        {% endif %}
+    </div>
+</div>
+
+
+<script>
+    // Handle quantity update
+    document.querySelectorAll('input[type="number"][data-item-id]').forEach(input => {
+        input.addEventListener('change', function() {
+            let itemId = this.dataset.itemId;
+            let quantity = this.value;
+            
+            // Send request to update the quantity
+            fetch(`/update-cart/${itemId}`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ quantity: quantity })
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    // Optionally update the total price or other page elements
+                    location.reload(); // Reload to reflect changes
+                } else {
+                    Swal.fire({
+                        position: "botton-end",
+                        icon: 'warning',
+                        title: "failed to update quantity",
+                        showConfirmButton: false,
+                        timer: 750
+                    });
+                }
+            })
+        });
+    });
+
+    // Handle remove item
+    document.querySelectorAll('.remove-item').forEach(button => {
+        button.addEventListener('click', function() {
+            let itemId = this.dataset.itemId;
+
+            // Send request to remove the item
+            fetch(`/remove-from-cart/${itemId}`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    location.reload(); // Reload to reflect changes
+                } else {
+                    Swal.fire({
+                        position: "botton-end",
+                        icon: 'warning',
+                        title: "failed to remove cart item",
+                        showConfirmButton: false,
+                        timer: 750
+                    });
+                }
+            });
+        });
+    });
+
+    function changeQuantity(button, amount) {
+        let quantityInput = button.parentElement.querySelector('input[type="number"]');
+        let currentValue = parseInt(quantityInput.value);
+        let newValue = currentValue + amount;
+        if (newValue < 1) newValue = 1;
+        quantityInput.value = newValue;
+        quantityInput.dispatchEvent(new Event('change')); // Trigger the change event manually
+    }
+
+</script>
+
+{% endblock %}
