@@ -130,20 +130,25 @@ To run this project on your local machine, follow these steps:
    cd cs50-final-project
 
 2. Install the required dependencies:
+    ```bash
     pip install -r requirements.txt
 
 3. Install front-end dependencies with npm:
+    ```bash
     npm install
 
 4. create database or migration 
+    ```bash
     flask db init
     flask db migrate -m "Initial migration"
     flask db upgrade
 
 5. seed the database with initial data
+    ```bash
     python -m website.seed
 
 6. Run the Flask application:
+    ```bash
     flask run
 
 7. Open a web browser and go to http://127.0.0.1:5000/ to view the project.
@@ -152,36 +157,37 @@ To run this project on your local machine, follow these steps:
 # Project Structure
 project-root/
 │
-├── instance/ # Instance-specific configuration files
-├── migrations/ # Database migration files
-├── node_modules/ # Node.js dependencies (if any)
-├── venv/ # Python virtual environment (excluded in .gitignore)
+├── instance/                   # Instance-specific configuration files
+├── migrations/                 # Database migration files
+├── node_modules/               # Node.js dependencies (if any)
+├── venv/                       # Python virtual environment (excluded in .gitignore)
 │
-├── website/ # Main application package
-│ ├── pycache/ # Python bytecode cache
-│ ├── static/ # Static assets
-│ │ ├── css/ # CSS stylesheets
-│ │ ├── img/ # Image assets
-│ │ └── js/ # JavaScript files
-│ │
-│ ├── templates/ # HTML templates
-│ │ ├── admin/ # Admin-specific templates
-│ │ ├── views/ # View-specific templates
-│ │ ├── 404.html # 404 error page
-│ │ ├── index.html # Home page
-│ │ ├── login.html # Login page
-│ │ └── register.html # Registration page
-│ │
-│ ├── init.py # Package initialization
-│ ├── admin.py # Admin configuration
-│ ├── auth.py # Authentication logic
-│ ├── forms.py # Form definitions
-│ ├── models.py # Database models
-│ ├── seed.py # Database seeding
-│ └── views.py # Application views/routes
+├── website/                    # Main application package
+│   ├── __pycache__/            # Python bytecode cache
+│   ├── static/                 # Static assets
+│   │   ├── css/                # CSS stylesheets
+│   │   ├── img/                # Image assets
+│   │   └── js/                 # JavaScript files
+│   │
+│   ├── templates/              # HTML templates
+│   │   ├── admin/              # Admin-specific templates
+│   │   ├── views/              # View-specific templates
+│   │   ├── 404.html            # 404 error page
+│   │   ├── index.html          # Home page
+│   │   ├── login.html          # Login page
+│   │   └── register.html       # Registration page
+│   │
+│   ├── __init__.py             # Package initialization
+│   ├── admin.py                # Admin configuration
+│   ├── auth.py                 # Authentication logic
+│   ├── forms.py                # Form definitions
+│   ├── models.py               # Database models
+│   ├── seed.py                 # Database seeding
+│   └── views.py                # Application views/routes
 │
-├── .gitignore # Specifies untracked files
-└── app.py # Main application entry point
+├── .gitignore                  # Specifies untracked files
+└── app.py                      # Main application entry point
+
 
 
 ### Key Files Explanation:
