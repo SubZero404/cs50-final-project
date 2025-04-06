@@ -155,6 +155,7 @@ To run this project on your local machine, follow these steps:
 
 
 # Project Structure
+```
 project-root/
 │
 ├── instance/                   # Instance-specific configuration files
@@ -187,7 +188,7 @@ project-root/
 │
 ├── .gitignore                  # Specifies untracked files
 └── app.py                      # Main application entry point
-
+```
 
 
 ### Key Files Explanation:
