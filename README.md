@@ -14,6 +14,16 @@ The primary goal of this project was to create a simple, functional online store
 - **Node.js & npm**: Used for managing front-end libraries.
 - **Jinja2**: A templating engine for dynamically generating HTML from Python variables.
 
+## Acknowledgements
+
+This project was developed with the assistance of the following tools:
+
+- **ChatGPT** by OpenAI — Used for guidance, explanations, and code suggestions during development and debugging.
+- **GitHub Copilot** — Used for code autocompletion and generating boilerplate code efficiently.
+
+These tools supported the learning process and helped streamline development.
+
+
 ### Front-End Libraries Installed via npm
 - **Bootstrap**: A popular CSS framework for building responsive and mobile-first websites.
 - **Bootstrap-icons**: Provides a set of customizable icons to use in the project.
@@ -155,6 +165,7 @@ To run this project on your local machine, follow these steps:
 
 
 # Project Structure
+```
 project-root/
 │
 ├── instance/                   # Instance-specific configuration files
@@ -187,7 +198,7 @@ project-root/
 │
 ├── .gitignore                  # Specifies untracked files
 └── app.py                      # Main application entry point
-
+```
 
 
 ### Key Files Explanation:
