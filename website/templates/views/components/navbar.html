@@ -4,18 +4,20 @@
             <i class="bi bi-list fs-1"></i>
         </button>
 
-        <a class="navbar-brand fw-bold text-primary" href="{{ url_for("views.index") }}">Brand Name</a>
+        <a class="navbar-brand fw-bold text-primary lobster-regular fs-2" href="{{ url_for("views.index") }}">Kyal Sin</a>
         
+        {% set current_path = request.path %}
+
         <div class="d-lg-block d-none" id="navbarNav">
             <ul class="navbar-nav">
                 <li class="nav-item">
-                    <a class="nav-link active" aria-current="page" href="{{ url_for('views.index') }}">Home</a>
+                    <a class="nav-link {% if current_path == url_for('views.index') %}active{% endif %}" href="{{ url_for('views.index') }}">Home</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="{{ url_for('views.contact') }}">Contact</a>
+                    <a class="nav-link {% if current_path == url_for('views.contact') %}active{% endif %}" href="{{ url_for('views.contact') }}">Contact</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="{{ url_for('views.about') }}">About</a>
+                    <a class="nav-link {% if current_path == url_for('views.about') %}active{% endif %}" href="{{ url_for('views.about') }}">About</a>
                 </li>
             </ul>
         </div>
@@ -68,13 +70,23 @@
         <div class="w-100 h-100 d-flex justify-content-center align-items-center">
             <ul class="navbar-nav fs-1 text-center">
                 <li class="nav-item mb-5">
-                    <a class="nav-link active" aria-current="page" href="{{ url_for("views.index") }}">Home</a>
+                    <a class="nav-link {% if current_path == url_for('views.index') %}active{% endif %}" 
+                       aria-current="page" 
+                       href="{{ url_for('views.index') }}">
+                       Home
+                    </a>
                 </li>
                 <li class="nav-item mb-5">
-                    <a class="nav-link" href="{{ url_for("views.contact") }}">Contact</a>
+                    <a class="nav-link {% if current_path == url_for('views.contact') %}active{% endif %}" 
+                       href="{{ url_for('views.contact') }}">
+                       Contact
+                    </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="{{ url_for("views.about") }}">About</a>
+                    <a class="nav-link {% if current_path == url_for('views.about') %}active{% endif %}" 
+                       href="{{ url_for('views.about') }}">
+                       About
+                    </a>
                 </li>
             </ul>
         </div>
