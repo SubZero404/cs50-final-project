@@ -1,1 +1,4 @@
 venv/
+instance/
+migrations/
+node_modules/
