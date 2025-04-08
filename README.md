@@ -139,29 +139,40 @@ To run this project on your local machine, follow these steps:
    git clone https://github.com/SubZero404/cs50-final-project.git
    cd cs50-final-project
 
-2. Install the required dependencies:
+2. Create venv for flask
+   ```bash
+   python -m venv venv
+
+3. activate venv
+- for windows
+   ```bash
+   venv\Scripts\activate
+   ```
+
+- for macos and linux
+   ```bash
+   source venv/bin/activate
+   ```
+
+4. Install the required dependencies:
     ```bash
     pip install -r requirements.txt
 
-3. Install front-end dependencies with npm:
-    ```bash
-    npm install
-
-4. create database or migration 
+5. create database or migration 
     ```bash
     flask db init
     flask db migrate -m "Initial migration"
     flask db upgrade
 
-5. seed the database with initial data
+6. seed the database with initial data
     ```bash
     python -m website.seed
 
-6. Run the Flask application:
+7. Run the Flask application:
     ```bash
     flask run
 
-7. Open a web browser and go to http://127.0.0.1:5000/ to view the project.
+8. Open a web browser and go to http://127.0.0.1:5000/ to view the project.
 
 
 # Project Structure
