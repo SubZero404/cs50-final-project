@@ -43,7 +43,14 @@
                     </a>
                     <ul class="dropdown-menu dropdown-menu-end">
                         <li><a class="dropdown-item" href="#">Profile</a></li>
-                        <li><a class="dropdown-item" href="#">Another action</a></li>
+                        {% if current_user.id == 1 %}
+                            <li>
+                                <a class="dropdown-item" href="{{ url_for('admin.productLists') }}">
+                                Admin dashboard
+                                </a>
+                            </li>
+                        {% endif %}
+
                         <li><a class="dropdown-item" href="{{ url_for('auth.changePassword') }}">change password</a></li>
                         <li><hr class="dropdown-divider"></li>
                         <li class="dropdown-item">
