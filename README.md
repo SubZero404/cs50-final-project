@@ -168,11 +168,18 @@ To run this project on your local machine, follow these steps:
     ```bash
     python -m website.seed
 
-7. Run the Flask application:
+7. Install front-end libaries
+   ```bash
+   npm init -y
+   npm install bootstrap bootstrap-icons sweetalert2 @glidejs/glide summernote jquery @popperjs/core --save
+
+8. Run the Flask application:
     ```bash
     flask run
 
-8. Open a web browser and go to http://127.0.0.1:5000/ to view the project.
+9. Open a web browser and go to http://127.0.0.1:5000/ to view the project.
+
+10. node: If register an account the first account will be adminstraction account please don't forget password when create 
 
 
 # Project Structure
