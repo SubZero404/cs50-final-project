@@ -164,7 +164,7 @@ To run this project on your local machine, follow these steps:
     flask db migrate -m "Initial migration"
     flask db upgrade
 
-6. seed the database with initial data
+6. seed the database with initial data !!! if you want empty data skip this step
     ```bash
     python -m website.seed
 
